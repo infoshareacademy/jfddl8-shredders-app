@@ -1,10 +1,10 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 
-function App() {
-  return (
-  );
-}
+import AppBar from './containers/app-bar'
 
-export default App;
+const App = () => (
+  <AppBar />
+)
+
+export default App
