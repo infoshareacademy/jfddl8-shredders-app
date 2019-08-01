@@ -1,10 +1,13 @@
 import React from 'react'
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 
 import AppBar from './containers/app-bar'
+import ListItem from './components/ListItem'
 
 const App = () => (
-  <AppBar />
+  <div>
+    <AppBar />
+    <ListItem />
+  </div>
 )
 
 export default App
