@@ -3,11 +3,13 @@ import { Route } from 'react-router-dom'
 
 import Router from './router/Router'
 import Nav from './router/Nav'
+import AddForm from './containers/AddForm';
 
 const App = () => (
   <div>
     <Router>
       <Nav />
+      <Route path={'/add-form'} component={AddForm} />
     </Router>
   </div>
 )
