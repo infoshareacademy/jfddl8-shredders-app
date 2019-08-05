@@ -6,19 +6,35 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 
 const props={
-  description: 'oi3wrnown@o2.pl',
-  label: 'Kamil',
-  photo: 'https://picsum.photos/200'
+  date: '26.05.2020',
+  label: 'Concert description',
+  photo: 'https://picsum.photos/id/237/300/200'
+}
+
+const styles = {
+  listItem: {
+    width: '100%',
+    height: '100px'
+  },
+  listItemAvatar: {
+    height: '100%',
+    width: '150px'
+  },
+  avatar: {
+    height: '100%',
+    width: '150px'
+  }
+  
 }
 
 const ListItem = () => (
-  <MuiListItem alignItems="flex-start">
-    <ListItemAvatar>
-      <Avatar alt={props.label} src={props.photo} />
+  <MuiListItem style={styles.listItem}  alignItems="flex-start">
+    <ListItemAvatar style={styles.listItemAvatar}>
+      {/* <Avatar style={styles.avatar} alt={props.label} src={props.photo} /> */}
     </ListItemAvatar>
     <ListItemText
       primary={props.label}
-      secondary={props.description}
+      secondary={props.date}
     />
   </MuiListItem>
 
