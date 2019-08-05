@@ -1,12 +1,14 @@
 import React from 'react'
+import { Route } from 'react-router-dom'
 
-import AppBar from './containers/app-bar'
-import ListItem from './components/ListItem'
+import Router from './router/Router'
+import Nav from './router/Nav'
 
 const App = () => (
   <div>
-    <AppBar />
-    <ListItem />
+    <Router>
+      <Nav />
+    </Router>
   </div>
 )
 
