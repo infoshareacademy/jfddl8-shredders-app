@@ -1,10 +1,15 @@
 import React from 'react'
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import { Route } from 'react-router-dom'
 
-import AppBar from './containers/app-bar'
+import Router from './router/Router'
+import Nav from './router/Nav'
 
 const App = () => (
-  <AppBar />
+  <div>
+    <Router>
+      <Nav />
+    </Router>
+  </div>
 )
 
 export default App
