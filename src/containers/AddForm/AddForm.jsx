@@ -1,36 +1,54 @@
 import React from 'react'
 import TextField from '@material-ui/core/TextField'
 import Button from '../../components/Button';
+import { addConcertsToBase } from '../../services/fetchService';
 
 class AddForm extends React.Component {
   state = {
     formDate: {
-      brand: null,
-      date: null,
-      description: null,
-      location: null,
-      ticketPrice: null
+      band: '',
+      date: '',
+      description: '',
+      location: '',
+      ticketPrice: ''
     }
   }
 
   changeHandler(evt, input) {
+    const text = evt.target.value
     this.setState({
       formDate: {
         ...this.state.formDate,
-        [input]: evt.target.value
+        [input]: text
+      }
+    })
+  }
+
+  onSendData = (evt) => {
+    evt.preventDefault()
+    addConcertsToBase(this.state.formDate)
+    this.setState({
+      formDate: {
+        band: '',
+        date: '',
+        description: '',
+        location: '',
+        ticketPrice: ''
       }
     })
   }
 
   render() {
+
     return (
       <form noValidate autoComplete="off">
         <TextField
+          value={this.state.formDate.band}
           id={'standard-name'}
-          label={'Brand'}
+          label={'Band'}
           margin={'normal'}
           fullWidth
-          onChange={evt => this.changeHandler(evt, 'brand')}
+          onChange={evt => this.changeHandler(evt, 'band')}
         />
         <TextField
           id={'standard-name'}
@@ -60,7 +78,7 @@ class AddForm extends React.Component {
           fullWidth
           onChange={evt => this.changeHandler(evt, 'ticketPrice')}
         />
-        <Button color='primary' fullWidth size='large' onClick={() => console.log(this.state.formDate)} />
+        <Button color='primary' fullWidth size='large' onClick={evt => this.onSendData(evt)} />
       </form>
 
     )
