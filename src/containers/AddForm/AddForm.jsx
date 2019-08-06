@@ -51,6 +51,7 @@ class AddForm extends React.Component {
           onChange={evt => this.changeHandler(evt, 'band')}
         />
         <TextField
+          value={this.state.formDate.date}
           id={'standard-name'}
           label={'Date'}
           margin={'normal'}
@@ -58,6 +59,7 @@ class AddForm extends React.Component {
           onChange={evt => this.changeHandler(evt, 'date')}
         />
         <TextField
+          value={this.state.formDate.description}
           id={'standard-name'}
           label={'Description'}
           margin={'normal'}
@@ -65,6 +67,7 @@ class AddForm extends React.Component {
           onChange={evt => this.changeHandler(evt, 'description')}
         />
         <TextField
+          value={this.state.formDate.location}
           id={'standard-name'}
           label={'Location'}
           margin={'normal'}
@@ -72,6 +75,7 @@ class AddForm extends React.Component {
           onChange={evt => this.changeHandler(evt, 'location')}
         />
         <TextField
+          value={this.state.formDate.ticketPrice}
           id={'standard-name'}
           label={'Ticket price'}
           margin={'normal'}
