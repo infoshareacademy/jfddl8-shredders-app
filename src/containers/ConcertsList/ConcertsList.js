@@ -1,7 +1,13 @@
 import React, { Component } from 'react'
 
 import List from '../../components/List'
+import Paper from '@material-ui/core/Paper';
+
 import { getConcertsFromBase } from '../../services/fetchService'
+
+const styles = {
+  paper: { marginTop: 20, padding: '0px 10px 0 10px' }
+}
 
 class ConcertsList extends Component {
 
@@ -20,10 +26,10 @@ class ConcertsList extends Component {
 
   render() {
     return (
-      <div>
+      <Paper style={styles.paper}>
         {this.state.isFetching ? <div>Loading</div> : null}
         {this.state.concerts ? <List data={this.state.concerts} /> : null}
-      </div>
+      </Paper>
     )
   }
 }
