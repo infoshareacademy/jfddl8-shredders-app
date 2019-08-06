@@ -1,5 +1,6 @@
 import React from 'react'
 import TextField from '@material-ui/core/TextField'
+import Button from '../../components/Button';
 
 class AddForm extends React.Component {
   state = {
@@ -59,7 +60,9 @@ class AddForm extends React.Component {
           fullWidth
           onChange={evt => this.changeHandler(evt, 'ticketPrice')}
         />
+        <Button color='primary' fullWidth size='large' />
       </form>
+
     )
   }
 }
