@@ -21,8 +21,8 @@ const SideBar = props => (
         toggleSideBar={props.toggleSideBar}
       />
       <SideBarItem
-        to={'/second-route'}
-        label={'Second route'}
+        to={'/concerts-list'}
+        label={'Concerts List'}
         toggleSideBar={props.toggleSideBar}
       />
     </div>
