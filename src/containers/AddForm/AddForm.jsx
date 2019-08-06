@@ -27,17 +27,15 @@ class AddForm extends React.Component {
   }
 
   changeHandler(evt, input) {
-    const text = evt.target.value
     this.setState({
       formDate: {
         ...this.state.formDate,
-        [input]: text
+        [input]: evt.target.value
       }
     })
   }
 
-  onSendData = (evt) => {
-    evt.preventDefault()
+  onSendData = () => {
     addConcertsToBase(this.state.formDate)
     this.clearInputs()
   }
@@ -57,7 +55,12 @@ class AddForm extends React.Component {
 
   ifEmptyString = () => {
     alert('Uzupełnij wszystkie pola formularza przed dodaniem !')
-    this.clearInputs()
+  }
+
+  onKeyDown = e => {
+    if (e.key === 'Enter') {
+      this.preventEmptyString()
+    }
   }
 
   render() {
@@ -71,7 +74,7 @@ class AddForm extends React.Component {
           margin={'normal'}
           fullWidth
           onChange={evt => this.changeHandler(evt, 'band')}
-          error={this.state.bandError}
+          onKeyDown={this.onKeyDown}
         />
         <TextField
           value={this.state.formDate.date}
@@ -80,6 +83,7 @@ class AddForm extends React.Component {
           margin={'normal'}
           fullWidth
           onChange={evt => this.changeHandler(evt, 'date')}
+          onKeyDown={this.onKeyDown}
         />
         <TextField
           value={this.state.formDate.description}
@@ -88,6 +92,7 @@ class AddForm extends React.Component {
           margin={'normal'}
           fullWidth
           onChange={evt => this.changeHandler(evt, 'description')}
+          onKeyDown={this.onKeyDown}
         />
         <TextField
           value={this.state.formDate.location}
@@ -96,6 +101,7 @@ class AddForm extends React.Component {
           margin={'normal'}
           fullWidth
           onChange={evt => this.changeHandler(evt, 'location')}
+          onKeyDown={this.onKeyDown}
         />
         <TextField
           value={this.state.formDate.ticketPrice}
@@ -104,6 +110,7 @@ class AddForm extends React.Component {
           margin={'normal'}
           fullWidth
           onChange={evt => this.changeHandler(evt, 'ticketPrice')}
+          onKeyDown={this.onKeyDown}
         />
         <Button
           color='primary'
