@@ -14,6 +14,18 @@ class AddForm extends React.Component {
     }
   }
 
+  clearInputs = () => {
+    this.setState({
+      formDate: {
+        band: '',
+        date: '',
+        description: '',
+        location: '',
+        ticketPrice: ''
+      }
+    })
+  }
+
   changeHandler(evt, input) {
     const text = evt.target.value
     this.setState({
@@ -27,15 +39,25 @@ class AddForm extends React.Component {
   onSendData = (evt) => {
     evt.preventDefault()
     addConcertsToBase(this.state.formDate)
-    this.setState({
-      formDate: {
-        band: '',
-        date: '',
-        description: '',
-        location: '',
-        ticketPrice: ''
-      }
-    })
+    this.clearInputs()
+  }
+
+  checkInputs = () => {
+    const { band, date, description, location, ticketPrice } = this.state.formDate
+
+    return band.trim() && date.trim() && description.trim() && location.trim() && ticketPrice.trim()
+  }
+
+  preventEmptyString = (evt) => {
+    this.checkInputs() ?
+      this.onSendData(evt)
+      :
+      this.ifEmptyString()
+  }
+
+  ifEmptyString = () => {
+    alert('Uzupełnij wszystkie pola formularza przed dodaniem !')
+    this.clearInputs()
   }
 
   render() {
@@ -49,6 +71,7 @@ class AddForm extends React.Component {
           margin={'normal'}
           fullWidth
           onChange={evt => this.changeHandler(evt, 'band')}
+          error={this.state.bandError}
         />
         <TextField
           value={this.state.formDate.date}
@@ -82,7 +105,11 @@ class AddForm extends React.Component {
           fullWidth
           onChange={evt => this.changeHandler(evt, 'ticketPrice')}
         />
-        <Button color='primary' fullWidth size='large' onClick={evt => this.onSendData(evt)} />
+        <Button
+          color='primary'
+          fullWidth size='large'
+          onClick={this.preventEmptyString}
+        />
       </form>
 
     )
