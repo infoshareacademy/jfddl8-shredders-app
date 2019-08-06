@@ -9,6 +9,7 @@ const Button = (props) => {
       color={props.color}
       fullWidth={props.fullWidth}
       size={props.size}
+      onClick={props.onClick}
     >
       SUBMIT
     </MuiButton>

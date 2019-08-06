@@ -60,7 +60,7 @@ class AddForm extends React.Component {
           fullWidth
           onChange={evt => this.changeHandler(evt, 'ticketPrice')}
         />
-        <Button color='primary' fullWidth size='large' />
+        <Button color='primary' fullWidth size='large' onClick={() => console.log(this.state.formDate)} />
       </form>
 
     )
