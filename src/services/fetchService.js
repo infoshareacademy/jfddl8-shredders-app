@@ -9,3 +9,14 @@ export const getConcertsFromBase = () => {
       return concerts
     })
 }
+
+export const addConcertsToBase = (concert) => {
+  console.log(concert)
+  return fetch('https://jfddl8-shredders.firebaseio.com/concertList.json',
+    {
+      method: 'POST',
+      body: JSON.stringify(concert)
+    })
+    .then(console.log('xxxx'))
+
+}

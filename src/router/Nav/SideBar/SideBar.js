@@ -16,8 +16,8 @@ const SideBar = props => (
   >
     <div style={styles.innerDrawer}>
       <SideBarItem
-        to={'/second-route'}
-        label={'First route'}
+        to={'/add-form'}
+        label={'Add Form'}
         toggleSideBar={props.toggleSideBar}
       />
       <SideBarItem
