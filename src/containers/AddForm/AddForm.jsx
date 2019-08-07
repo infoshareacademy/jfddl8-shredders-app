@@ -14,19 +14,7 @@ class AddForm extends React.Component {
     }
   }
 
-  changeHandler(evt, input) {
-    const text = evt.target.value
-    this.setState({
-      formDate: {
-        ...this.state.formDate,
-        [input]: text
-      }
-    })
-  }
-
-  onSendData = (evt) => {
-    evt.preventDefault()
-    addConcertsToBase(this.state.formDate)
+  clearInputs = () => {
     this.setState({
       formDate: {
         band: '',
@@ -36,6 +24,43 @@ class AddForm extends React.Component {
         ticketPrice: ''
       }
     })
+  }
+
+  changeHandler(evt, input) {
+    this.setState({
+      formDate: {
+        ...this.state.formDate,
+        [input]: evt.target.value
+      }
+    })
+  }
+
+  onSendData = () => {
+    addConcertsToBase(this.state.formDate)
+    this.clearInputs()
+  }
+
+  checkInputs = () => {
+    const { band, date, description, location, ticketPrice } = this.state.formDate
+
+    return band.trim() && date.trim() && description.trim() && location.trim() && ticketPrice.trim()
+  }
+
+  preventEmptyString = (evt) => {
+    this.checkInputs() ?
+      this.onSendData(evt)
+      :
+      this.ifEmptyString()
+  }
+
+  ifEmptyString = () => {
+    alert('Uzupełnij wszystkie pola formularza przed dodaniem !')
+  }
+
+  onKeyDown = e => {
+    if (e.key === 'Enter') {
+      this.preventEmptyString()
+    }
   }
 
   render() {
@@ -49,6 +74,7 @@ class AddForm extends React.Component {
           margin={'normal'}
           fullWidth
           onChange={evt => this.changeHandler(evt, 'band')}
+          onKeyDown={this.onKeyDown}
         />
         <TextField
           value={this.state.formDate.date}
@@ -57,6 +83,7 @@ class AddForm extends React.Component {
           margin={'normal'}
           fullWidth
           onChange={evt => this.changeHandler(evt, 'date')}
+          onKeyDown={this.onKeyDown}
         />
         <TextField
           value={this.state.formDate.description}
@@ -65,6 +92,7 @@ class AddForm extends React.Component {
           margin={'normal'}
           fullWidth
           onChange={evt => this.changeHandler(evt, 'description')}
+          onKeyDown={this.onKeyDown}
         />
         <TextField
           value={this.state.formDate.location}
@@ -73,6 +101,7 @@ class AddForm extends React.Component {
           margin={'normal'}
           fullWidth
           onChange={evt => this.changeHandler(evt, 'location')}
+          onKeyDown={this.onKeyDown}
         />
         <TextField
           value={this.state.formDate.ticketPrice}
@@ -81,8 +110,13 @@ class AddForm extends React.Component {
           margin={'normal'}
           fullWidth
           onChange={evt => this.changeHandler(evt, 'ticketPrice')}
+          onKeyDown={this.onKeyDown}
         />
-        <Button color='primary' fullWidth size='large' onClick={evt => this.onSendData(evt)} />
+        <Button
+          color='primary'
+          fullWidth size='large'
+          onClick={this.preventEmptyString}
+        />
       </form>
 
     )
