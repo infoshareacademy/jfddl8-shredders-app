@@ -1,6 +1,8 @@
 import React from 'react'
 import { Route } from 'react-router-dom'
 
+import './main.css'
+
 import Router from './router/Router'
 import Nav from './router/Nav'
 import AddForm from './containers/AddForm';

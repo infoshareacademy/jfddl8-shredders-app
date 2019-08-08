@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 
 import ListItem from './ListItem'
 import PaginationPanel from './PaginationPanel/PaginationPanel'
+import ListItemWithDialog from '../ListItemWithDialog'
 
 class List extends React.Component {
   state = {
@@ -38,7 +39,9 @@ class List extends React.Component {
     return (
       <div>
         {this.state.concertsToShow && this.state.concertsToShow[this.state.concertsIndex].map(data => (
-          <ListItem key={data.key} data={data} />
+          <Fragment key={data.key}>
+            {this.props.listWithDialog ? <ListItemWithDialog data={data} /> : <ListItem data={data} />}
+          </Fragment>
         ))}
         <PaginationPanel
           paginationLength={this.state.paginationLength}
