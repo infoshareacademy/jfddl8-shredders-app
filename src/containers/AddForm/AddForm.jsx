@@ -66,45 +66,26 @@ class AddForm extends React.Component {
   }
 
   render() {
+    const formDate = [
+      { label: 'Band', functionArg: 'band' },
+      { label: 'Date', functionArg: 'date' },
+      { label: 'Description', functionArg: 'description' },
+      { label: 'Genre', functionArg: 'genre' },
+      { label: 'Location', functionArg: 'location' },
+      { label: 'Ticket price', functionArg: 'ticketPrice' }
+    ]
 
     return (
       <form noValidate autoComplete="off">
-        <TextField
-          value={this.state.formDate.band}
-          label={'Band'}
-          changeHandler={evt => this.changeHandler(evt, 'band')}
-          handleKeyDown={this.onKeyDown}
-        />
-        <TextField
-          value={this.state.formDate.date}
-          label={'Date'}
-          changeHandler={evt => this.changeHandler(evt, 'date')}
-          handleKeyDown={this.onKeyDown}
-        />
-        <TextField
-          value={this.state.formDate.description}
-          label={'Description'}
-          changeHandler={evt => this.changeHandler(evt, 'description')}
-          handleKeyDown={this.onKeyDown}
-        />
-        <TextField
-          value={this.state.formDate.genre}
-          label={'Genre'}
-          changeHandler={evt => this.changeHandler(evt, 'genre')}
-          handleKeyDown={this.onKeyDown}
-        />
-        <TextField
-          value={this.state.formDate.location}
-          label={'Location'}
-          changeHandler={evt => this.changeHandler(evt, 'location')}
-          handleKeyDown={this.onKeyDown}
-        />
-        <TextField
-          value={this.state.formDate.ticketPrice}
-          label={'Ticket price'}
-          changeHandler={evt => this.changeHandler(evt, 'ticketPrice')}
-          handleKeyDown={this.onKeyDown}
-        />
+        {formDate.map(elem => (
+          <TextField
+            value={this.state.formDate[elem.functionArg]}
+            label={elem.label}
+            changeHandler={evt => this.changeHandler(evt, elem.functionArg)}
+            handleKeyDown={this.onKeyDown}
+          />
+        ))}
+
         <Button
           color='primary'
           size='large'
