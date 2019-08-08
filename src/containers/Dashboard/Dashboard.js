@@ -1,8 +1,16 @@
 import React from 'react'
 
+import MultiSeriesChart from '../Chart/MultiSeriesChart'
+import RoundChart from '../Chart/RoundChart'
+
 const Dashboard = (props) => (
   <div>
-    Dashboard
+
+    <RoundChart/>
+    <br/>
+    <br/>
+    <MultiSeriesChart/>
+
   </div>
 )
 

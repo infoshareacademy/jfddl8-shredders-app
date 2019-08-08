@@ -16,6 +16,12 @@ const SideBar = props => (
   >
     <div style={styles.innerDrawer}>
       <SideBarItem
+        to={'/Dashboard'}
+        label={'Dashboard'}
+        toggleSideBar={props.toggleSideBar}
+      />
+
+      <SideBarItem
         to={'/add-form'}
         label={'Add Form'}
         toggleSideBar={props.toggleSideBar}
