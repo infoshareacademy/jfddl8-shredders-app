@@ -79,6 +79,7 @@ class AddForm extends React.Component {
       <form noValidate autoComplete="off">
         {formDate.map(elem => (
           <TextField
+            key={elem.label}
             value={this.state.formDate[elem.functionArg]}
             label={elem.label}
             changeHandler={evt => this.changeHandler(evt, elem.functionArg)}
