@@ -56,73 +56,72 @@ const DialogActions = withStyles(theme => ({
   },
 }))(MuiDialogActions);
 
-const [open, setOpen] = React.useState(false);
 
-class ListItem extends React.Component {
+const ListItem = props => {
 
+  const [open, setOpen] = React.useState(false);
 
-  handleClickOpen = () => {
+  const handleClickOpen = () => {
     setOpen(true);
   };
-  handleClose = () => {
+  const handleClose = () => {
     setOpen(false);
   };
 
+  console.log(props.data)
 
-  render() {
-    return (
-      <div>
-        <MuiListItem alignItems="flex-start" onClick={this.handleClickOpen}>
-          <ListItemAvatar>
-            <Avatar alt="concert" src="http://lorempixel.com/200/200" />
-          </ListItemAvatar>
-          <ListItemText
-            primary={this.props.data.band}
-            secondary={
-              <React.Fragment>
-                <Typography
-                  component="span"
-                  variant="body2"
-                  color="textPrimary"
-                  style={{ display: 'inline' }}
-                >
-                  {this.props.data.location}
-                </Typography>
-                {' — ' + this.props.data.date}
-              </React.Fragment>
-            }
-          />
-        </MuiListItem>
-        <Divider variant="inset" component="div" />
+  return (
+    <div>
+      <MuiListItem alignItems="flex-start" onClick={handleClickOpen}>
+        <ListItemAvatar>
+          <Avatar alt="concert" src="http://lorempixel.com/200/200" />
+        </ListItemAvatar>
+        <ListItemText
+          primary={props.data.band}
+          secondary={
+            <React.Fragment>
+              <Typography
+                component="span"
+                variant="body2"
+                color="textPrimary"
+                style={{ display: 'inline' }}
+              >
+                {props.data.location}
+              </Typography>
+              {' — ' + props.data.date}
+            </React.Fragment>
+          }
+        />
+      </MuiListItem>
+      <Divider variant="inset" component="div" />
 
-        <Dialog onClose={this.handleClose} aria-labelledby="customized-dialog-title" open={open}>
-          <DialogTitle id="customized-dialog-title" onClose={this.handleClose}>
-            {this.props.data.band}
-          </DialogTitle>
-          <DialogContent dividers>
-            <Typography gutterBottom>
-              Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis
-              in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+      <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
+        <DialogTitle id="customized-dialog-title" onClose={handleClose}>
+          {props.data.band}
+        </DialogTitle>
+        <DialogContent dividers>
+          <Typography gutterBottom>
+            Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis
+            in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
           </Typography>
-            <Typography gutterBottom>
-              Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis
-              lacus vel augue laoreet rutrum faucibus dolor auctor.
+          <Typography gutterBottom>
+            Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis
+            lacus vel augue laoreet rutrum faucibus dolor auctor.
           </Typography>
-            <Typography gutterBottom>
-              Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel
-              scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus
-              auctor fringilla.
+          <Typography gutterBottom>
+            Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel
+            scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus
+            auctor fringilla.
           </Typography>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={this.handleClose} color="secondary">
-              Delete
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="secondary">
+            Delete
           </Button>
-          </DialogActions>
-        </Dialog>
-      </div >
-    )
-  }
+        </DialogActions>
+      </Dialog>
+    </div >
+  )
 }
 
 export default ListItem
