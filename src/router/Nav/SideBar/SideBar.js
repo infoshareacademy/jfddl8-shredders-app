@@ -16,13 +16,13 @@ const SideBar = props => (
   >
     <div style={styles.innerDrawer}>
       <SideBarItem
-        to={'/second-route'}
-        label={'First route'}
+        to={'/add-form'}
+        label={'Add Form'}
         toggleSideBar={props.toggleSideBar}
       />
       <SideBarItem
-        to={'/second-route'}
-        label={'Second route'}
+        to={'/concerts-list'}
+        label={'Concerts List'}
         toggleSideBar={props.toggleSideBar}
       />
     </div>
