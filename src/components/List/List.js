@@ -7,23 +7,21 @@ import ListItemWithDialog from '../ListItemWithDialog'
 class List extends React.Component {
   state = {
     pageLength: 10,
-    concerts: this.props.data,
-    paginationLength: 10,
-    concertsToShow: null,
     concertsIndex: 0
   }
 
   concertsDivide = () => {
     let concertsToShow = []
     let arr = []
-    this.state.concerts.forEach((concert, index) => {
+    this.props.data.forEach((concert, index) => {
       arr.push(concert)
-      if (arr.length === this.state.pageLength || index === this.state.concerts.length - 1) {
+      if (arr.length === this.state.pageLength || index === this.props.data.length - 1) {
         concertsToShow.push(arr)
         arr = []
       }
     })
-    this.setState({ concertsToShow, paginationLength: Math.ceil(this.props.data.length / this.state.pageLength) })
+
+    return { concertsToShow, paginationLength: Math.ceil(this.props.data.length / this.state.pageLength) }
   }
 
   componentDidMount() {
@@ -36,15 +34,23 @@ class List extends React.Component {
   }
 
   render() {
+    const concertsToShow = this.concertsDivide().concertsToShow
+    const paginationLength = this.concertsDivide().paginationLength
+
     return (
       <div>
-        {this.state.concertsToShow && this.state.concertsToShow[this.state.concertsIndex].map(data => (
+        {concertsToShow && concertsToShow[this.state.concertsIndex].map(data => (
           <Fragment key={data.key}>
-            {this.props.listWithDialog ? <ListItemWithDialog data={data} /> : <ListItem data={data} />}
+            {this.props.listWithDialog
+              ?
+              <ListItemWithDialog data={data} deleteConcert={this.props.deleteConcert} />
+              :
+              <ListItem data={data} />
+            }
           </Fragment>
         ))}
         <PaginationPanel
-          paginationLength={this.state.paginationLength}
+          paginationLength={paginationLength}
           changePage={this.changeConcertsIndex}
           currentPage={this.state.concertsIndex}
         />

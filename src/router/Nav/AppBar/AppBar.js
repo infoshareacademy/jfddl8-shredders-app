@@ -11,7 +11,7 @@ import MenuIcon from '@material-ui/icons/Menu'
 const AppBar = (props) => {
   return (
     <div>
-      <MuiAppBar position="static">
+      <MuiAppBar color={'default'} position="static">
         <Toolbar>
           <IconButton edge="start" color="inherit" aria-label="menu" onClick={props.toggleSideBar}>
             <MenuIcon />

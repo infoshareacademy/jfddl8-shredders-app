@@ -13,7 +13,7 @@ const App = () => (
     <Router>
       <Nav />
       <Route path={'/add-form'} component={AddForm} />
-      <Route path={'/concerts-list'} component={ConcertsList} />
+      <Route path={'/concerts-list/:concertKey?'} component={ConcertsList} />
     </Router>
   </div>
 )
