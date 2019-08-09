@@ -1,15 +1,16 @@
 import React from 'react'
 
-import MultiSeriesChart from '../Chart/MultiSeriesChart'
-import RoundChart from '../Chart/RoundChart'
+import CustomersLoginsChart from '../Chart/CustomersLoginsChart'
+import CustomerSatisfactionChart from '../Chart/CustomerSatisfactionChart'
 
 const Dashboard = (props) => (
   <div>
-
-    <RoundChart/>
-    <br/>
-    <br/>
-    <MultiSeriesChart/>
+    <br />
+    <br />
+    <CustomerSatisfactionChart />
+    <br />
+    <br />
+    <CustomersLoginsChart />
 
   </div>
 )

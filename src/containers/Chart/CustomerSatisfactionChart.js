@@ -1,9 +1,9 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 
 import CanvasJSReact from '../../utlils/canvasjs.react'
 const CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
-class RoundChart extends Component {
+class CustomerSatisfactionChart extends Component {
 	render() {
 		const options = {
 			animationEnabled: true,
@@ -12,8 +12,8 @@ class RoundChart extends Component {
 			},
 			subtitles: [{
 				text: "77% to pozytywne opinie",
-        verticalAlign: "center",
-        horizontalAlign: "center",
+				verticalAlign: "center",
+				horizontalAlign: "center",
 				fontSize: 14,
 				dockInsidePlotArea: true
 			}],
@@ -32,11 +32,11 @@ class RoundChart extends Component {
 			}]
 		}
 		return (
-		<div>
-			<CanvasJSChart options = {options}/>
-		</div>
+			<div>
+				<CanvasJSChart options={options} />
+			</div>
 		);
 	}
 }
 
-export default  RoundChart;   
+export default CustomerSatisfactionChart;   
