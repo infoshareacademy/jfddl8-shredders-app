@@ -8,10 +8,9 @@ class CustomerSatisfactionChart extends Component {
 		const options = {
 			animationEnabled: true,
 			title: {
-				text: "Zadowolenie klientów"
+				text: "Eventy w naszej aplikacji"
 			},
 			subtitles: [{
-				text: "77% to pozytywne opinie",
 				verticalAlign: "center",
 				horizontalAlign: "center",
 				fontSize: 14,
@@ -21,13 +20,12 @@ class CustomerSatisfactionChart extends Component {
 				type: "doughnut",
 				showInLegend: true,
 				indexLabel: "{name}: {y}",
-				yValueFormatString: "#,###'%'",
+				yValueFormatString: "#,###' %'",
 				dataPoints: [
-					{ name: " Niezadowolony", y: 5 },
-					{ name: " Bardzo niezadowolony", y: 11 },
-					{ name: " Bardzo zadowolony", y: 50 },
-					{ name: " Zadowolony", y: 27 },
-					{ name: " Bez opinii", y: 7 }
+					{ name: " Festyny", y: 11 },
+					{ name: " Koncerty ", y: 50 },
+					{ name: " Festiwale ", y: 27 },
+					{ name: " Koncerty zagraniczne", y: 12 }
 				]
 			}]
 		}
