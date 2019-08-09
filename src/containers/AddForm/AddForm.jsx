@@ -44,8 +44,21 @@ class AddForm extends React.Component {
 
   checkInputs = () => {
     const { band, date, description, genre, location, ticketPrice } = this.state.formDate
+    const regexDate = /^\d\d[/]\d\d[/]\d\d\d\d$/
+    const regexNumber = /^[0-9.,]+$/
+
+    if (regexNumber.test(ticketPrice) === false) {
+      alert('Please fill ticket price field correctly!')
+      return
+    }
+
+    if (regexDate.test(date) === false) {
+      alert("Please fill data field in format DD/MM/YYYY");
+      return
+    }
 
     return band.trim() && date.trim() && description.trim() && genre.trim() && location.trim() && ticketPrice.trim()
+
   }
 
   preventEmptyString = (evt) => {
@@ -56,7 +69,7 @@ class AddForm extends React.Component {
   }
 
   ifEmptyString = () => {
-    alert('Uzupełnij wszystkie pola formularza przed dodaniem !')
+    alert('Please fill all fields before submitting!')
   }
 
   onKeyDown = e => {
@@ -68,7 +81,7 @@ class AddForm extends React.Component {
   render() {
     const formDate = [
       { label: 'Band', functionArg: 'band' },
-      { label: 'Date', functionArg: 'date' },
+      { label: 'Date: DD/MM/YYYY', functionArg: 'date' },
       { label: 'Description', functionArg: 'description' },
       { label: 'Genre', functionArg: 'genre' },
       { label: 'Location', functionArg: 'location' },
