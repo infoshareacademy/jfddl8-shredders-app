@@ -20,7 +20,22 @@ class ConcertsList extends Component {
     concerts: null,
     isFetching: false,
     filters: {
-      isFavorite: false
+      isFavorite: false,
+      band: '',
+      location: '',
+      date: '',
+      genre: '',
+    }
+  }
+
+  onChangeHanler = (key) => {
+    return (event) => {
+      const filters = {
+        ...this.state.filters,
+        [key]: event.target.value
+      }
+
+      this.setState({ filters })
     }
   }
 
@@ -47,7 +62,12 @@ class ConcertsList extends Component {
   render() {
     const filteredConcerts = this.state.concerts && this.state.concerts.filter(el => {
       const isFavorite = this.state.filters.isFavorite ? el.isFavorite : true
-      return isFavorite
+      const isBandMatch = el.band ? el.band.toLowerCase().includes(this.state.filters.band.toLowerCase()) : false
+      const isDateMatch = el.date ? el.date.includes(this.state.filters.date) : false
+      const isGenreMatch = el.genre ? el.genre.includes(this.state.filters.genre) : false
+      const isPlaceMatch = el.location ? el.location.toLowerCase().includes(this.state.filters.location.toLowerCase()) : false
+
+      return isFavorite && isBandMatch && isDateMatch && isGenreMatch && isPlaceMatch
     })
     return (
       <Fragment>
@@ -57,7 +77,8 @@ class ConcertsList extends Component {
             <Filters
               style={styles.filters}
               toggleFavorite={this.toggleFavorite}
-              isFavorite={this.state.filters.isFavorite}
+              onChangeHanler={this.onChangeHanler}
+              filters={this.state.filters}
             />
 
             <List data={filteredConcerts} listWithDialog deleteConcert={this.deleteConcert} />
