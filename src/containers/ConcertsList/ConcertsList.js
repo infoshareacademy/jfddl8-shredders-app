@@ -30,9 +30,10 @@ class ConcertsList extends Component {
 
   onChangeHanler = (key) => {
     return (event) => {
+
       const filters = {
         ...this.state.filters,
-        [key]: event.target.value
+        [key]: event.target.value.toLowerCase() === 'all genres ' ? '' : event.target.value.toLowerCase()
       }
 
       this.setState({ filters })
@@ -62,10 +63,10 @@ class ConcertsList extends Component {
   render() {
     const filteredConcerts = this.state.concerts && this.state.concerts.filter(el => {
       const isFavorite = this.state.filters.isFavorite ? el.isFavorite : true
-      const isBandMatch = el.band ? el.band.toLowerCase().includes(this.state.filters.band.toLowerCase()) : false
-      const isDateMatch = el.date ? el.date.includes(this.state.filters.date) : false
-      const isGenreMatch = el.genre ? el.genre.includes(this.state.filters.genre) : false
-      const isPlaceMatch = el.location ? el.location.toLowerCase().includes(this.state.filters.location.toLowerCase()) : false
+      const isBandMatch = el.band ? el.band.toLowerCase().includes(this.state.filters.band.toLowerCase()) : true
+      const isDateMatch = el.date ? el.date.includes(this.state.filters.date) : true
+      const isGenreMatch = el.genre ? el.genre.includes(this.state.filters.genre) : true
+      const isPlaceMatch = el.location ? el.location.toLowerCase().includes(this.state.filters.location.toLowerCase()) : true
 
       return isFavorite && isBandMatch && isDateMatch && isGenreMatch && isPlaceMatch
     })

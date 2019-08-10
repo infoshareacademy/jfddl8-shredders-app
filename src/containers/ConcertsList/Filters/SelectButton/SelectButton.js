@@ -26,7 +26,6 @@ function SplitButton(props) {
   function handleMenuItemClick(event, index) {
     setSelectedIndex(index);
     setOpen(false);
-    console.warn(event, index)
     const selectedValue = options[index]
     const value = selectedValue !== 'All' ? selectedValue : ''
     props.onChangeHandler({
