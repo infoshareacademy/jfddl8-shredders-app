@@ -4,6 +4,15 @@ import ListItem from './ListItem'
 import PaginationPanel from './PaginationPanel/PaginationPanel'
 import ListItemWithDialog from '../ListItemWithDialog'
 
+const styles = {
+  noResult: {
+    fontWeight: 'bold',
+    display: 'flex',
+    justifyContent: 'center',
+    padding: 10
+  }
+}
+
 class List extends React.Component {
   state = {
     pageLength: 10,
@@ -39,7 +48,8 @@ class List extends React.Component {
 
     return (
       <div>
-        {concertsToShow && concertsToShow[this.state.concertsIndex].map(data => (
+        {concertsToShow && concertsToShow.length === 0 && <div style={styles.noResult}>No results, try with another filters!</div>}
+        {concertsToShow && concertsToShow.length !== 0 && concertsToShow[this.state.concertsIndex].map(data => (
           <Fragment key={data.key}>
             {this.props.listWithDialog
               ?
@@ -49,11 +59,14 @@ class List extends React.Component {
             }
           </Fragment>
         ))}
-        <PaginationPanel
-          paginationLength={paginationLength}
-          changePage={this.changeConcertsIndex}
-          currentPage={this.state.concertsIndex}
-        />
+        {paginationLength > 1
+          ?
+          <PaginationPanel
+            paginationLength={paginationLength}
+            changePage={this.changeConcertsIndex}
+            currentPage={this.state.concertsIndex}
+          />
+          : null}
       </div>
     )
   }
