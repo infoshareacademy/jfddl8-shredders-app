@@ -51,14 +51,6 @@ const styles = {
 
 const ListItemWithDialog = (props) => {
 
-  // props.data
-  //   band: "sdsd"
-  // date: ""
-  // description: ""
-  // key: "-LlbP5RpkT8Oq_nAe5XD"
-  // location: ""
-  // ticketPrice: ""
-
   return (
     <div>
       <Link to={'/concerts-list/' + props.data.key} style={{ textDecoration: 'none', color: 'black' }}>

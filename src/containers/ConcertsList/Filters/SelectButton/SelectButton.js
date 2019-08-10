@@ -66,7 +66,7 @@ function SplitButton(props) {
       <Popper open={open} anchorEl={anchorRef.current} transition disablePortal>
         {({ TransitionProps, placement }) => (
 
-          <Paper id="menu-list-grow">
+          <Paper id="menu-list-grow" style={{ zIndex: 100 }} >
             <ClickAwayListener onClickAway={handleClose}>
               <MenuList>
                 {options.map((option, index) => (

@@ -5,7 +5,7 @@ import './main.css'
 
 import Router from './router/Router'
 import Nav from './router/Nav'
-import AddForm from './containers/AddForm';
+import AddForm from './containers/AddForm'
 import ConcertsList from './containers/ConcertsList/ConcertsList'
 
 const App = () => (
