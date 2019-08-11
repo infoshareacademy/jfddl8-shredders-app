@@ -10,7 +10,8 @@ const SimpleSelect = props => {
       select
       value={props.value}
       onChange={props.onChangeHandler}
-      margin="normal"
+      margin={window.innerWidth < 781 ? 'none' : "normal"}
+      style={{ marginLeft: '20px', marginRight: '20px' }}
     >
       <MenuItem value={'all'}>All</MenuItem>
       <MenuItem value={'pop'}>Pop</MenuItem>

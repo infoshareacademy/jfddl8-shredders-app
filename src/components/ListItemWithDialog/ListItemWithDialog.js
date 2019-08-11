@@ -76,7 +76,7 @@ const ListItemWithDialog = (props) => {
           </div>
 
           <Grid container spacing={2}>
-            <Grid item>
+            <Grid item style={{ marginLeft: 'auto', marginRight: 'auto' }}>
               <ButtonBase style={styles.image}>
                 <img style={styles.img} alt="concert" src="http://lorempixel.com/200/200" />
               </ButtonBase>

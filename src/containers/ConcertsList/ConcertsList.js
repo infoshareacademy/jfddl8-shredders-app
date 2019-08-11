@@ -11,7 +11,7 @@ import { getConcertsFromBase, removeConcertsInBase } from '../../services/fetchS
 const styles = {
   paper: { marginTop: 20, padding: '0px 10px 0 10px' },
   progress: { display: 'flex', justifyContent: 'center', marginTop: 30 },
-  filters: { display: 'flex', justifyContent: 'center' }
+
 }
 
 class ConcertsList extends Component {
@@ -76,7 +76,6 @@ class ConcertsList extends Component {
         {filteredConcerts ?
           <Paper style={styles.paper}>
             <Filters
-              style={styles.filters}
               toggleFavorite={this.toggleFavorite}
               onChangeHanler={this.onChangeHanler}
               filters={this.state.filters}

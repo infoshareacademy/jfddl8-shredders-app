@@ -4,24 +4,22 @@ import Favorite from '@material-ui/icons/Favorite';
 import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 import TextField from '@material-ui/core/TextField';
 
-import SelectButton from './SelectButton'
 import SimpleSelect from './SimpleSelect/SimpleSelect';
 
-
+const styles = {
+  filters: { display: 'flex', justifyContent: 'center' },
+  filtersSM: { display: 'flex', justifyContent: 'center', flexDirection: 'column' }
+}
 
 
 const Filters = props => {
   return (
-    <div style={props.style}>
-      <IconButton onClick={props.toggleFavorite} color={'secondary'} style={{ margin: '0 10px' }}>
-        {props.filters.isFavorite ? <Favorite /> : <FavoriteBorder color={'action'} />}
-      </IconButton>
-
-      {/* <SelectButton
-
-        value={props.filters.genre}
-        onChangeHandler={props.onChangeHanler('genre')}
-      /> */}
+    <div style={window.innerWidth < 781 ? styles.filtersSM : styles.filters}>
+      <div style={{ display: 'flex', justifyContent: 'center', marginTop: 7 }}>
+        <IconButton onClick={props.toggleFavorite} color={'secondary'}  >
+          {props.filters.isFavorite ? <Favorite /> : <FavoriteBorder color={'action'} />}
+        </IconButton>
+      </div>
 
       <SimpleSelect
         value={props.filters.genre}
