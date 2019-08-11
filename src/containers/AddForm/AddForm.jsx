@@ -41,7 +41,11 @@ class AddForm extends React.Component {
     this.setState({
       formData: {
         ...this.state.formData,
-        [input]: e.target.value.trim()
+        [input]: (e.target.value.trim() ?
+          e.target.value
+          :
+          e.target.value.trim()
+        )
       },
       errors: {
         ...this.state.errors
