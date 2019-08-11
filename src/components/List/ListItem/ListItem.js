@@ -1,15 +1,16 @@
 import React from 'react'
 
-import MuiListItem from '@material-ui/core/ListItem';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import Avatar from '@material-ui/core/Avatar';
-import ListItemText from '@material-ui/core/ListItemText';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
+import MuiListItem from '@material-ui/core/ListItem'
+import ListItemAvatar from '@material-ui/core/ListItemAvatar'
+import Avatar from '@material-ui/core/Avatar'
+import ListItemText from '@material-ui/core/ListItemText'
+import Typography from '@material-ui/core/Typography'
+import Divider from '@material-ui/core/Divider'
+
 
 const ListItem = props => {
   return (
-    <div>
+    <div onClick={props.onClick} className={'listItem'}>
       <MuiListItem alignItems="flex-start">
         <ListItemAvatar>
           <Avatar alt="concert" src="http://lorempixel.com/200/200" />
@@ -32,6 +33,7 @@ const ListItem = props => {
         />
       </MuiListItem>
       <Divider variant="inset" component="div" />
+
     </div>
   )
 }

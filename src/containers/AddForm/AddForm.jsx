@@ -1,23 +1,32 @@
 import React from 'react'
+
 import TextField from '../../components/TextField'
 import Button from '../../components/Button';
 import { addConcertsToBase } from '../../services/fetchService';
 
 class AddForm extends React.Component {
   state = {
-    formDate: {
+    formData: {
       band: '',
       date: '',
       description: '',
       genre: '',
       location: '',
       ticketPrice: ''
+    },
+    errors: {
+      band: false,
+      date: false,
+      description: false,
+      genre: false,
+      location: false,
+      ticketPrice: false
     }
   }
 
   clearInputs = () => {
     this.setState({
-      formDate: {
+      formData: {
         band: '',
         date: '',
         description: '',
@@ -28,69 +37,90 @@ class AddForm extends React.Component {
     })
   }
 
-  changeHandler(evt, input) {
+  changeHandler(e, input) {
     this.setState({
-      formDate: {
-        ...this.state.formDate,
-        [input]: evt.target.value
+      formData: {
+        ...this.state.formData,
+        [input]: (e.target.value.trim() ?
+          e.target.value
+          :
+          e.target.value.trim()
+        )
       }
     })
   }
 
   onSendData = () => {
-    addConcertsToBase(this.state.formDate)
+    addConcertsToBase(this.state.formData)
     this.clearInputs()
   }
 
-  checkInputs = () => {
-    const { band, date, description, genre, location, ticketPrice } = this.state.formDate
+  errorHandler = (input, bool) => {
+    const regexDate = /^\d\d[/]\d\d[/]\d\d\d\d$/
+    const regexNumber = /^[0-9.,]+$/
 
-    return band.trim() && date.trim() && description.trim() && genre.trim() && location.trim() && ticketPrice.trim()
-  }
+    let isError = false
+    if (bool) {
+      isError = !this.state.formData[input]
 
-  preventEmptyString = (evt) => {
-    this.checkInputs() ?
-      this.onSendData(evt)
-      :
-      this.ifEmptyString()
-  }
+      if (input === 'date') {
+        isError = regexDate.test(this.state.formData[input]) ? false : true
+      }
 
-  ifEmptyString = () => {
-    alert('Uzupełnij wszystkie pola formularza przed dodaniem !')
-  }
-
-  onKeyDown = e => {
-    if (e.key === 'Enter') {
-      this.preventEmptyString()
+      if (input === "ticketPrice") {
+        isError = regexNumber.test(this.state.formData[input]) ? false : true
+      }
+      if (input === "genre") {
+        const genre = this.state.formData[input]
+        isError = (
+          genre === 'pop' || genre === 'rock' || genre === 'jazz' || genre === 'disco-polo' || genre === 'hip-hop') ?
+          false
+          :
+          true
+      }
     }
+    this.setState({
+      errors: {
+        ...this.state.errors,
+        [input]: isError
+      }
+    })
   }
 
   render() {
-    const formDate = [
-      { label: 'Band', functionArg: 'band' },
-      { label: 'Date', functionArg: 'date' },
-      { label: 'Description', functionArg: 'description' },
-      { label: 'Genre', functionArg: 'genre' },
-      { label: 'Location', functionArg: 'location' },
-      { label: 'Ticket price', functionArg: 'ticketPrice' }
+    const formData = [
+      { label: 'Band', functionArg: 'band', helperText: 'Please fill in before submitting!' },
+      { label: 'Date: DD/MM/YYYY', functionArg: 'date', helperText: 'Invalid date format!' },
+      { label: 'Description', functionArg: 'description', helperText: 'Please fill in before submitting!' },
+      { label: 'Genre: pop/rock/jazz/disco-polo/hip-hop', functionArg: 'genre', helperText: 'Please fill in a proper music genre!' },
+      { label: 'Location', functionArg: 'location', helperText: 'Please fill in before submitting!' },
+      { label: 'Ticket price', functionArg: 'ticketPrice', helperText: 'Please fill in a number!' }
     ]
 
+    const { band, date, description, genre, location, ticketPrice } = this.state.formData
+    const inputsFilled = band && date && description && genre && location && ticketPrice
+    const isError = !inputsFilled || this.state.errors.band || this.state.errors.date ||
+      this.state.errors.description || this.state.errors.genre || this.state.errors.location ||
+      this.state.errors.ticketPrice
+
     return (
-      <form noValidate autoComplete="off">
-        {formDate.map(elem => (
+      <form>
+        {formData.map(elem => (
           <TextField
             key={elem.label}
-            value={this.state.formDate[elem.functionArg]}
+            helperText={this.state.errors[elem.functionArg] ? elem.helperText : ''}
+            error={this.state.errors[elem.functionArg]}
+            value={this.state.formData[elem.functionArg]}
             label={elem.label}
-            changeHandler={evt => this.changeHandler(evt, elem.functionArg)}
-            handleKeyDown={this.onKeyDown}
+            changeHandler={e => this.changeHandler(e, elem.functionArg)}
+            onBlur={() => this.errorHandler(elem.functionArg, true)}
           />
         ))}
-
         <Button
           color='primary'
           size='large'
-          handleOnClick={this.preventEmptyString}
+          disabled={isError}
+          handleOnClick={this.onSendData}
         />
       </form>
     )
