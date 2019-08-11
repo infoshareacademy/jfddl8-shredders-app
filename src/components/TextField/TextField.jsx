@@ -4,31 +4,39 @@ import MuiTextField from '@material-ui/core/TextField'
 
 
 const TextField = (props) => {
-  const { value, label, changeHandler, handleKeyDown } = props
+  const { error, helperText, value, label,
+    onBlur, changeHandler } = props
+
   return (
     < MuiTextField
-      value={value}
+      error={error}
+      fullWidth
+      helperText={helperText}
       label={label}
       margin={'normal'}
-      fullWidth
       onChange={changeHandler}
-      onKeyDown={handleKeyDown}
+      onBlur={onBlur}
+      value={value}
     />
   )
 }
 
 TextField.propTypes = {
   changeHandler: PropTypes.func,
+  error: PropTypes.bool,
+  helperText: PropTypes.string,
   label: PropTypes.string,
+  onBlur: PropTypes.func,
   value: PropTypes.string,
-  handleKeyDown: PropTypes.func,
 }
 
 TextField.defaultProps = {
-  label: '',
-  value: '',
-  handleKeyDown: () => { },
   changeHandler: () => { },
+  error: false,
+  helperText: '',
+  label: '',
+  onBlur: () => { },
+  value: ''
 }
 
 export default TextField

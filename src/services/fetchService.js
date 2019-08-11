@@ -5,7 +5,7 @@ export const getConcertsFromBase = () => {
     .then(r => r.json())
     .then(data => {
       const concerts = mapObjectToArray(data)
-
+      console.log(concerts)
       return concerts
     })
 }

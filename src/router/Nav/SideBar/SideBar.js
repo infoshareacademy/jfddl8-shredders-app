@@ -25,6 +25,11 @@ const SideBar = props => (
         label={'Concerts List'}
         toggleSideBar={props.toggleSideBar}
       />
+      <SideBarItem
+        to={'/favorites'}
+        label={'Favorites'}
+        toggleSideBar={props.toggleSideBar}
+      />
     </div>
   </Drawer>
 )
