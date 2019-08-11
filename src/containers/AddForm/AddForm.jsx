@@ -46,9 +46,6 @@ class AddForm extends React.Component {
           :
           e.target.value.trim()
         )
-      },
-      errors: {
-        ...this.state.errors
       }
     })
   }
@@ -73,6 +70,14 @@ class AddForm extends React.Component {
       if (input === "ticketPrice") {
         isError = regexNumber.test(this.state.formData[input]) ? false : true
       }
+      if (input === "genre") {
+        const genre = this.state.formData[input]
+        isError = (
+          genre === 'pop' || genre === 'rock' || genre === 'jazz' || genre === 'disco-polo' || genre === 'hip-hop') ?
+          false
+          :
+          true
+      }
     }
     this.setState({
       errors: {
@@ -87,7 +92,7 @@ class AddForm extends React.Component {
       { label: 'Band', functionArg: 'band', helperText: 'Please fill in before submitting!' },
       { label: 'Date: DD/MM/YYYY', functionArg: 'date', helperText: 'Invalid date format!' },
       { label: 'Description', functionArg: 'description', helperText: 'Please fill in before submitting!' },
-      { label: 'Genre', functionArg: 'genre', helperText: 'Please fill in before submitting!' },
+      { label: 'Genre: pop/rock/jazz/disco-polo/hip-hop', functionArg: 'genre', helperText: 'Please fill in a proper music genre!' },
       { label: 'Location', functionArg: 'location', helperText: 'Please fill in before submitting!' },
       { label: 'Ticket price', functionArg: 'ticketPrice', helperText: 'Please fill in a number!' }
     ]
