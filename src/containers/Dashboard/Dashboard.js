@@ -5,6 +5,7 @@ import CustomerSatisfactionChart from '../Chart/CustomerSatisfactionChart'
 
 const Dashboard = (props) => (
   <div>
+
     <br />
     <br />
     <CustomerSatisfactionChart />
