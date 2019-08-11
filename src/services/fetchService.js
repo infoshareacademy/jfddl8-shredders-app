@@ -18,3 +18,10 @@ export const addConcertsToBase = (concert) => {
     })
 
 }
+
+export const removeConcertsInBase = (key) => {
+  return fetch('https://jfddl8-shredders.firebaseio.com/concertList/' + key + '.json',
+    {
+      method: 'DELETE',
+    })
+}

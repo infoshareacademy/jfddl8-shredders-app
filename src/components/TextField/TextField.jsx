@@ -6,13 +6,14 @@ import MuiTextField from '@material-ui/core/TextField'
 const TextField = (props) => {
   const { value, label, changeHandler, handleKeyDown } = props
   return (
-    < MuiTextField
+    <MuiTextField
       value={value}
       label={label}
       margin={'normal'}
       fullWidth
       onChange={changeHandler}
       onKeyDown={handleKeyDown}
+
     />
   )
 }
