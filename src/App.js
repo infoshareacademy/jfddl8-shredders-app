@@ -5,7 +5,6 @@ import Router from './router/Router'
 import Nav from './router/Nav'
 import AddForm from './containers/AddForm';
 import ConcertsList from './containers/ConcertsList/ConcertsList'
-import FavoritesList from './containers/Favorites';
 
 const App = () => (
   <div>
@@ -13,7 +12,6 @@ const App = () => (
       <Nav />
       <Route path={'/add-form'} component={AddForm} />
       <Route path={'/concerts-list'} component={ConcertsList} />
-      <Route path={'/favorites'} component={FavoritesList} />
     </Router>
   </div>
 )
