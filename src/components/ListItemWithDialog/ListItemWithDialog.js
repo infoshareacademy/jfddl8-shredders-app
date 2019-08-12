@@ -3,7 +3,6 @@ import MuiDialog from '@material-ui/core/Dialog'
 import ListItem from '../List/ListItem'
 import { Link } from 'react-router-dom'
 import { withRouter } from 'react-router'
-import { FormControlLabel, Checkbox } from '@material-ui/core';
 import Favorite from '@material-ui/icons/Favorite';
 import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 import Grid from '@material-ui/core/Grid';
@@ -13,6 +12,7 @@ import ButtonBase from '@material-ui/core/ButtonBase';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Button from '@material-ui/core/Button';
+
 
 const styles = {
   root: {
@@ -50,7 +50,6 @@ const styles = {
 }
 
 const ListItemWithDialog = (props) => {
-
   return (
     <div>
       <Link to={'/concerts-list/' + props.data.key} style={{ textDecoration: 'none', color: 'black' }}>
@@ -67,9 +66,9 @@ const ListItemWithDialog = (props) => {
 
         <Paper style={styles.paper}>
           <div style={styles.favoriteDiv}>
-            <FormControlLabel style={styles.favorite}
-              control={<Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />} value="checkedH" />}
-            />
+            <IconButton onClick={() => props.toggleFavoriteInBase(props.data.key, !props.data.isFavorite)} color={'secondary'}  >
+              {props.data.isFavorite ? <Favorite /> : <FavoriteBorder color={'action'} />}
+            </IconButton>
             <IconButton onClick={() => props.history.push('/concerts-list')}>
               <CloseIcon />
             </IconButton>

@@ -5,7 +5,6 @@ export const getConcertsFromBase = () => {
     .then(r => r.json())
     .then(data => {
       const concerts = mapObjectToArray(data)
-      console.log(concerts)
       return concerts
     })
 }
@@ -23,5 +22,15 @@ export const removeConcertsInBase = (key) => {
   return fetch('https://jfddl8-shredders.firebaseio.com/concertList/' + key + '.json',
     {
       method: 'DELETE',
+    })
+}
+
+export const toggleFavoriteConcertsInBase = (key, isFavorite) => {
+  return fetch('https://jfddl8-shredders.firebaseio.com/concertList/' + key + '.json',
+    {
+      method: 'PATCH',
+      body: JSON.stringify({
+        isFavorite
+      })
     })
 }
