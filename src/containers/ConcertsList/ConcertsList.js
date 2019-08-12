@@ -6,7 +6,7 @@ import Filters from './Filters';
 import Paper from '@material-ui/core/Paper';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-import { getConcertsFromBase, removeConcertsInBase } from '../../services/fetchService'
+import { getConcertsFromBase, removeConcertsInBase, toggleFavoriteConcertsInBase } from '../../services/fetchService'
 
 const styles = {
   paper: { marginTop: 20, padding: '0px 10px 0 10px' },
@@ -53,11 +53,16 @@ class ConcertsList extends Component {
 
   deleteConcert = key => {
     return removeConcertsInBase(key)
-      .then(() => this.getConcerts())
+      .then(this.getConcerts)
   }
 
   toggleFavorite = () => {
     this.setState({ filters: { ...this.state.filters, isFavorite: !this.state.filters.isFavorite } })
+  }
+
+  toggleFavoriteInBase = (key, isFavorite) => {
+    return toggleFavoriteConcertsInBase(key, isFavorite)
+      .then(this.getConcerts)
   }
 
   render() {
@@ -84,7 +89,12 @@ class ConcertsList extends Component {
             <hr />
 
 
-            <List data={filteredConcerts} listWithDialog deleteConcert={this.deleteConcert} />
+            <List
+              data={filteredConcerts}
+              listWithDialog
+              deleteConcert={this.deleteConcert}
+              toggleFavoriteInBase={this.toggleFavoriteInBase}
+            />
           </Paper> : null}
       </Fragment>
     )

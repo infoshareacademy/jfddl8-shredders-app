@@ -53,7 +53,11 @@ class List extends React.Component {
           <Fragment key={data.key}>
             {this.props.listWithDialog
               ?
-              <ListItemWithDialog data={data} deleteConcert={this.props.deleteConcert} />
+              <ListItemWithDialog
+                data={data}
+                deleteConcert={this.props.deleteConcert}
+                toggleFavoriteInBase={this.props.toggleFavoriteInBase}
+              />
               :
               <ListItem data={data} />
             }
