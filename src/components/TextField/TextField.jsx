@@ -2,6 +2,15 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import MuiTextField from '@material-ui/core/TextField'
 
+const styles = {
+  textField: {
+    display: 'flex',
+    flexDirection: 'column',
+    padding: '30',
+    margin: '0 auto',
+    maxWidth: '600px'
+  }
+}
 
 const TextField = (props) => {
   const { error, helperText, value, label,
@@ -9,6 +18,7 @@ const TextField = (props) => {
 
   return (
     < MuiTextField
+      style={styles.textField}
       error={error}
       fullWidth
       helperText={helperText}
