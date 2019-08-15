@@ -14,13 +14,15 @@ const styles = {
 
 const TextField = (props) => {
   const { error, helperText, value, label,
-    onBlur, changeHandler } = props
+    onBlur, changeHandler, select } = props
 
   return (
     < MuiTextField
+      select={select}
       style={styles.textField}
       error={error}
       fullWidth
+      multiline
       helperText={helperText}
       label={label}
       margin={'normal'}
