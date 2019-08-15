@@ -19,7 +19,10 @@ export const logInAsyncActionCreator = (email, password) => (dispatch, getState)
   )
     .then(r => r.json())
     .then(data => {
-      if (data.error) return Promise.reject(data)
+      if (data.error) {
+        console.log(data.error)
+        return Promise.reject(data)
+      }
 
       return data
     })

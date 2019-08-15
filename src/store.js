@@ -1,7 +1,8 @@
 import { createStore, combineReducers, compose, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 
-import auth from './state/auth'
+import auth, { checkIfUSerIsLoggedInAsyncActionCreator } from './state/auth'
+
 
 const reducer = combineReducers({
   auth
@@ -15,3 +16,5 @@ export const store = createStore(
     applyMiddleware(thunk)
   )
 )
+
+store.dispatch(checkIfUSerIsLoggedInAsyncActionCreator())

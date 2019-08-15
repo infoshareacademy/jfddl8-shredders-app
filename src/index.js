@@ -9,9 +9,9 @@ import Auth from './Auth'
 
 ReactDOM.render(
   <Provider store={store}>
-    {/* <Auth> */}
-    <App />
-    {/* </Auth> */}
+    <Auth>
+      <App />
+    </Auth>
   </Provider>,
   document.getElementById('root')
 )

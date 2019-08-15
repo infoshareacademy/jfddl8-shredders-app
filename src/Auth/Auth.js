@@ -3,19 +3,26 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { logInAsyncActionCreator } from '../state/auth'
 
-import LoginForm from './LoginForm'
+import LogInForm from './LogInForm'
+import SignInForm from './SignInForm'
 
 class Auth extends React.Component {
   state = {
     email: '',
-    password: ''
+    password: '',
+    password2: '',
+    showSignInForm: false
   }
 
-  onEmailChanged = evt => this.setState({ email: evt.target.value })
+  onInputChanged = (input) => (evt) => this.setState({ [input]: evt.target.value })
 
-  onPasswordChanged = evt => this.setState({ password: evt.target.value })
+  onLogInClick = () => this.props._logIn(this.state.email, this.state.password)
 
-  onLoginClick = () => this.props._logIn(this.state.email, this.state.password)
+  onSignInClick = () => {
+    this.state.password === this.state.passowrd2 ? alert('ok') : alert('wrong password')
+  }
+
+  toggleForm = () => this.setState({ showSignInForm: !this.state.showSignInForm })
 
   render() {
     return (
@@ -24,13 +31,23 @@ class Auth extends React.Component {
           this.props._isUserLoggedIn ?
             this.props.children
             :
-            <LoginForm
-              email={this.state.email}
-              password={this.state.password}
-              onEmailChanged={this.onEmailChanged}
-              onPasswordChanged={this.onPasswordChanged}
-              onLogInClick={this.onLoginClick}
-            />
+            this.state.showSignInForm ?
+              <SignInForm
+                email={this.state.email}
+                password={this.state.password}
+                password2={this.state.password2}
+                onInputChanged={this.onInputChanged}
+                onSignInClick={this.onSignInClick}
+                toggleForm={this.toggleForm}
+              />
+              :
+              <LogInForm
+                email={this.state.email}
+                password={this.state.password}
+                onInputChanged={this.onInputChanged}
+                onLogInClick={this.onLogInClick}
+                toggleForm={this.toggleForm}
+              />
         }
       </div>
     )
