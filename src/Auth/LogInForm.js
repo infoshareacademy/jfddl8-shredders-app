@@ -24,6 +24,12 @@ const styles = {
 }
 
 const LoginForm = props => {
+  const enableSubmit = (
+    props.email.length > 0 &&
+    props.password.length > 0 &&
+    !props.errors.wrongEmail
+  )
+
   return (
     <div style={styles.div}>
       <Paper style={styles.paper}>
@@ -33,8 +39,12 @@ const LoginForm = props => {
         <TextField
           value={props.email}
           onChange={props.onInputChanged('email')}
+          onFocus={props.onLogIn().emailInputFocus}
+          onBlur={props.onLogIn().emailInputBlur}
+          error={props.errors.wrongEmail}
           fullWidth
           label={"e-mail"}
+          helperText={props.errors.wrongEmail ? "Wrong e-mail" : ''}
         />
         <TextField
           value={props.password}
@@ -44,10 +54,11 @@ const LoginForm = props => {
           type={'password'}
         />
         <Button
-          onClick={props.onLogInClick}
           style={styles.button}
           variant={'contained'}
           color={'primary'}
+          onClick={props.onLogIn().click}
+          disabled={!enableSubmit}
         >
           LOG IN
       </Button>
@@ -57,7 +68,7 @@ const LoginForm = props => {
           variant={'contained'}
           color={'secondary'}
         >
-          SIGN IN
+          SIGN UP
       </Button>
       </Paper>
     </div>

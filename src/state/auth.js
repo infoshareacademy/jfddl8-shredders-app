@@ -1,9 +1,43 @@
 import jwt from 'jsonwebtoken'
 
-const SIGN_IN_URL = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCgHJiLFJ5EN8pJW7KpgrQD2QaSNgjvMtA'
+const API_KEY = 'AIzaSyAY8yO-AihhNCdcOpVSDcqNWmXs7U5wdVU'
+
+const SIGN_IN_URL = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' + API_KEY
+const SIGN_UP_URL = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' + API_KEY
 
 const LOGGED_IN = 'auth/LOGGED_IN'
 const LOGGED_OUT = 'auth/LOGGED_OUT'
+
+export const signInAsyncActionCreator = (email, password) => (dispatch, getState) => {
+  return fetch(
+    SIGN_UP_URL,
+    {
+      method: 'POST',
+      body: JSON.stringify({
+        email,
+        password,
+      })
+    }
+  )
+    .then(r => r.json())
+    .then(data => {
+      if (data.error) {
+        return Promise.reject(data)
+      }
+
+      return data
+    })
+    .then(data => {
+      localStorage.setItem('idToken', data.idToken)
+      localStorage.setItem('refreshToken', data.refreshToken)
+
+      dispatch(checkIfUSerIsLoggedInAsyncActionCreator())
+
+      return data
+    })
+    .catch(data => {
+    })
+}
 
 export const logInAsyncActionCreator = (email, password) => (dispatch, getState) => {
   return fetch(
@@ -20,7 +54,6 @@ export const logInAsyncActionCreator = (email, password) => (dispatch, getState)
     .then(r => r.json())
     .then(data => {
       if (data.error) {
-        console.log(data.error)
         return Promise.reject(data)
       }
 
