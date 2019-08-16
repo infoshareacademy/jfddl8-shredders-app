@@ -1,12 +1,48 @@
+import { store } from '../store'
+import { refreshTokenAsyncActionCreator } from './auth'
+
 export default (url, name, mapData) => {
   const GET = name + '/GET'
 
-  const getAsyncActionCreator = (queryString = '') => (dispatch, getState) => {
-    const auth = getState().auth
-    if (auth.idToken) queryString = queryString + '&auth=' + auth.idToken
+  const fetchWithToken = (url, options) => {
+    const getState = store.getState
+    const dispatch = store.dispatch
 
-    fetch(url + '.json?' + queryString)
+    const getUrlWithToken = () => {
+      const auth = getState().auth
+      if (auth.idToken) return url + '&auth=' + auth.idToken
+
+      return url
+    }
+    return fetch(getUrlWithToken(), options)
+      .then(r => {
+        if (r.status === 401) {
+          return Promise.reject()
+        }
+        return r
+      })
+      .catch((r) => {
+        return dispatch(refreshTokenAsyncActionCreator())
+          .catch(() => Promise.reject(r))
+          .then(() => fetch(getUrlWithToken(), options))
+      })
       .then(r => r.json())
+      .then(data => {
+        if (data && data.error) return Promise.reject
+
+        return data
+      })
+      .then(data => data)
+      .catch(error => {
+        alert(error)
+        return error
+      })
+  }
+
+
+  const getAsyncActionCreator = (queryString = '') => (dispatch, getState) => {
+
+    fetchWithToken(url + '.json?' + queryString)
       .then(data => {
         const mappedData = mapData ? mapData(data) : data
         dispatch(getActionCreator(mappedData))
@@ -14,10 +50,8 @@ export default (url, name, mapData) => {
   }
 
   const removeAsyncActionCreator = (key, queryString = '') => (dispatch, getState) => {
-    const auth = getState().auth
-    if (auth.idToken) queryString = queryString + '&auth=' + auth.idToken
 
-    return fetch(url + key + '.json?' + queryString,
+    return fetchWithToken(url + key + '.json?' + queryString,
       {
         method: 'DELETE',
       })
@@ -40,10 +74,7 @@ export default (url, name, mapData) => {
   }
 
   const toggleFavoriteAsyncActionCreator = (key, isFavorite, queryString = '') => (dispatch, getState) => {
-    const auth = getState().auth
-    if (auth.idToken) queryString = queryString + '&auth=' + auth.idToken
-
-    return fetch(url + key + '.json?' + queryString,
+    return fetchWithToken(url + key + '.json?' + queryString,
       {
         method: 'PATCH',
         body: JSON.stringify({
