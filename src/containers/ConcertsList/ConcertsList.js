@@ -6,7 +6,9 @@ import Filters from './Filters';
 import Paper from '@material-ui/core/Paper';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-import { getConcertsFromBase, removeConcertsInBase, toggleFavoriteConcertsInBase } from '../../services/fetchService'
+import { fetchs } from '../../state/concerts'
+
+import withFetchService from '../../services/withFetchService'
 
 const styles = {
   paper: { marginTop: 20, padding: '0px 10px 0 10px' },
@@ -17,7 +19,6 @@ const styles = {
 class ConcertsList extends Component {
 
   state = {
-    concerts: null,
     isFetching: false,
     filters: {
       isFavorite: false,
@@ -26,6 +27,10 @@ class ConcertsList extends Component {
       date: '',
       genre: 'all',
     }
+  }
+
+  componentDidMount() {
+    this.props._getData()
   }
 
   onChangeHanler = (key) => {
@@ -40,33 +45,12 @@ class ConcertsList extends Component {
     }
   }
 
-  componentDidMount() {
-    this.getConcerts()
-  }
-
-  getConcerts = () => {
-    this.setState({ isFetching: true })
-
-    getConcertsFromBase()
-      .then(concerts => this.setState({ concerts, isFetching: false }))
-  }
-
-  deleteConcert = key => {
-    return removeConcertsInBase(key)
-      .then(this.getConcerts)
-  }
-
   toggleFavorite = () => {
     this.setState({ filters: { ...this.state.filters, isFavorite: !this.state.filters.isFavorite } })
   }
 
-  toggleFavoriteInBase = (key, isFavorite) => {
-    return toggleFavoriteConcertsInBase(key, isFavorite)
-      .then(this.getConcerts)
-  }
-
   render() {
-    const filteredConcerts = this.state.concerts && this.state.concerts.filter(el => {
+    const filteredConcerts = this.props._data && this.props._data.filter(el => {
       const isFavorite = this.state.filters.isFavorite ? el.isFavorite : true
       const isBandMatch = el.band ? el.band.toLowerCase().includes(this.state.filters.band.toLowerCase()) : true
       const isDateMatch = el.date ? el.date.includes(this.state.filters.date) : true
@@ -92,8 +76,8 @@ class ConcertsList extends Component {
             <List
               data={filteredConcerts}
               listWithDialog
-              deleteConcert={this.deleteConcert}
-              toggleFavoriteInBase={this.toggleFavoriteInBase}
+              deleteConcert={this.props._deleteItem}
+              toggleFavoriteInBase={this.props._toggleFavorite}
             />
           </Paper> : null}
       </Fragment>
@@ -101,4 +85,7 @@ class ConcertsList extends Component {
   }
 }
 
-export default ConcertsList
+export default withFetchService(
+  'concerts',
+  fetchs
+)(ConcertsList)

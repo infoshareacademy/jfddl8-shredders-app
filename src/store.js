@@ -1,10 +1,13 @@
 import { createStore, combineReducers, compose, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 
-import auth from './state/auth'
+import auth, { checkIfUSerIsLoggedInAsyncActionCreator } from './state/auth'
+import concerts from './state/concerts'
+
 
 const reducer = combineReducers({
-  auth
+  auth,
+  concerts
 })
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
@@ -15,3 +18,6 @@ export const store = createStore(
     applyMiddleware(thunk)
   )
 )
+
+
+store.dispatch(checkIfUSerIsLoggedInAsyncActionCreator())
