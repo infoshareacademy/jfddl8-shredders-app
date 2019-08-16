@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken'
+import { store } from '../store'
 
 const API_KEY = 'AIzaSyAY8yO-AihhNCdcOpVSDcqNWmXs7U5wdVU'
 
@@ -8,18 +9,14 @@ const REFRESH_TOKEN_URL = 'https://identitytoolkit.googleapis.com/v1/token?key='
 
 const LOGGED_IN = 'auth/LOGGED_IN'
 const LOGGED_OUT = 'auth/LOGGED_OUT'
+const START_FETCHING = '/START_FETCHING'
+const STOP_FETCHING = '/STOP_FETCHING'
 
-export const signInAsyncActionCreator = (email, password) => (dispatch, getState) => {
-  return fetch(
-    SIGN_UP_URL,
-    {
-      method: 'POST',
-      body: JSON.stringify({
-        email,
-        password,
-      })
-    }
-  )
+const authFetch = (url, options) => {
+  const dispatch = store.dispatch
+  dispatch(startFetchingActionCreator())
+
+  return fetch(url, options)
     .then(r => r.json())
     .then(data => {
       if (data.error) {
@@ -36,12 +33,28 @@ export const signInAsyncActionCreator = (email, password) => (dispatch, getState
 
       return data
     })
-    .catch(data => {
-    })
+    .catch(data => console.log(data))
+    .finally(() => dispatch(stopFetchingActionCreator()))
+
+}
+
+export const signInAsyncActionCreator = (email, password) => (dispatch, getState) => {
+  dispatch(startFetchingActionCreator())
+  return authFetch(
+    SIGN_UP_URL,
+    {
+      method: 'POST',
+      body: JSON.stringify({
+        email,
+        password,
+      })
+    }
+  )
 }
 
 export const logInAsyncActionCreator = (email, password) => (dispatch, getState) => {
-  return fetch(
+  dispatch(startFetchingActionCreator())
+  return authFetch(
     SIGN_IN_URL,
     {
       method: 'POST',
@@ -52,24 +65,6 @@ export const logInAsyncActionCreator = (email, password) => (dispatch, getState)
       })
     }
   )
-    .then(r => r.json())
-    .then(data => {
-      if (data.error) {
-        return Promise.reject(data)
-      }
-
-      return data
-    })
-    .then(data => {
-      localStorage.setItem('idToken', data.idToken)
-      localStorage.setItem('refreshToken', data.refreshToken)
-
-      dispatch(checkIfUSerIsLoggedInAsyncActionCreator())
-
-      return data
-    })
-    .catch(data => {
-    })
 }
 
 export const refreshTokenAsyncActionCreator = () => (dispatch, getState) => {
@@ -87,29 +82,31 @@ export const refreshTokenAsyncActionCreator = () => (dispatch, getState) => {
 }
 const refreshToken = () => {
   const refreshToken = localStorage.getItem('refreshToken')
-  return fetch(
-    REFRESH_TOKEN_URL,
-    {
-      method: 'POST',
-      body: JSON.stringify({
-        grant_type: 'refresh_token',
-        refresh_token: refreshToken
-      })
-    }
-  )
-    .then(r => r.json())
-    .then(data => {
-      if (data.error) {
-        return Promise.reject(data)
+  if (refreshToken) {
+    return fetch(
+      REFRESH_TOKEN_URL,
+      {
+        method: 'POST',
+        body: JSON.stringify({
+          grant_type: 'refresh_token',
+          refresh_token: refreshToken
+        })
       }
+    )
+      .then(r => r.json())
+      .then(data => {
+        if (data.error) {
+          return Promise.reject(data)
+        }
 
-      return data
-    })
-    .then(data => {
-      localStorage.setItem('idToken', data.id_token)
-      localStorage.setItem('refreshToken', data.refresh_token)
-      return data
-    })
+        return data
+      })
+      .then(data => {
+        localStorage.setItem('idToken', data.id_token)
+        localStorage.setItem('refreshToken', data.refresh_token)
+        return data
+      })
+  }
 }
 
 
@@ -153,13 +150,22 @@ const loggedInActionCreator = (idToken, refreshToken) => ({
   userData: jwt.decode(idToken)
 })
 
-export const loggedOutActionCreator = () => ({ type: LOGGED_OUT })
+const startFetchingActionCreator = () => ({ type: START_FETCHING })
+
+const stopFetchingActionCreator = () => ({ type: STOP_FETCHING })
+
+export const loggedOutActionCreator = () => {
+  localStorage.setItem('idToken', '')
+  localStorage.setItem('refreshToken', '')
+  return { type: LOGGED_OUT }
+}
 
 const initialState = {
   isUserLoggedIn: false,
   userData: null,
   idToken: null,
-  refreshToken: null
+  refreshToken: null,
+  isFetching: false
 }
 
 export default (state = initialState, action) => {
@@ -180,6 +186,16 @@ export default (state = initialState, action) => {
       return {
         ...state,
         idToken: 'xxx'
+      }
+    case START_FETCHING:
+      return {
+        ...state,
+        isFetching: true
+      }
+    case STOP_FETCHING:
+      return {
+        ...state,
+        isFetching: false
       }
     default:
       return state

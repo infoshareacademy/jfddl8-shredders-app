@@ -3,10 +3,14 @@ import { refreshTokenAsyncActionCreator } from './auth'
 
 export default (url, name, mapData) => {
   const GET = name + '/GET'
+  const START_FETCHING = name + '/START_FETCHING'
+  const STOP_FETCHING = name + '/STOP_FETCHING'
 
   const fetchWithToken = (url, options) => {
     const getState = store.getState
     const dispatch = store.dispatch
+
+    dispatch(startFetchingActionCreator())
 
     const getUrlWithToken = () => {
       const auth = getState().auth
@@ -32,11 +36,14 @@ export default (url, name, mapData) => {
 
         return data
       })
-      .then(data => data)
+      .then(data => {
+        return data
+      })
       .catch(error => {
         alert(error)
         return error
       })
+      .finally(() => dispatch(stopFetchingActionCreator()))
   }
 
 
@@ -92,8 +99,14 @@ export default (url, name, mapData) => {
     data
   })
 
+  const startFetchingActionCreator = () => ({ type: START_FETCHING })
+
+  const stopFetchingActionCreator = () => ({ type: STOP_FETCHING })
+
   const initialState = {
-    data: null
+    data: null,
+    isFetching: false,
+    isError: false
   }
 
   const reducer = (state = initialState, action) => {
@@ -102,6 +115,16 @@ export default (url, name, mapData) => {
         return {
           ...state,
           data: action.data
+        }
+      case START_FETCHING:
+        return {
+          ...state,
+          isFetching: true
+        }
+      case STOP_FETCHING:
+        return {
+          ...state,
+          isFetching: false
         }
 
       default:

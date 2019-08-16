@@ -12,7 +12,20 @@ import withFetchService from '../../services/withFetchService'
 
 const styles = {
   paper: { marginTop: 20, padding: '0px 10px 0 10px' },
-  progress: { display: 'flex', justifyContent: 'center', marginTop: 30 },
+  progress: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100vw',
+    height: '100vh',
+    backgroundColor: 'gray',
+    opacity: 0.7,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 30,
+    zIndex: 10000
+  },
 
 }
 
@@ -61,25 +74,26 @@ class ConcertsList extends Component {
     })
     return (
       <Fragment>
-        {this.state.isFetching ? <div style={styles.progress}><CircularProgress size={80} /></div> : null}
-        {filteredConcerts ?
-          <Paper style={styles.paper}>
-            <Filters
-              toggleFavorite={this.toggleFavorite}
-              onChangeHanler={this.onChangeHanler}
-              filters={this.state.filters}
-            />
-            <br />
-            <hr />
+        {this.props._isFetching ? <div style={styles.progress}><CircularProgress size={80} /></div> : null}
 
+        <Paper style={styles.paper}>
+          <Filters
+            toggleFavorite={this.toggleFavorite}
+            onChangeHanler={this.onChangeHanler}
+            filters={this.state.filters}
+          />
+          <br />
+          <hr />
 
+          {filteredConcerts ?
             <List
               data={filteredConcerts}
               listWithDialog
               deleteConcert={this.props._deleteItem}
               toggleFavoriteInBase={this.props._toggleFavorite}
             />
-          </Paper> : null}
+            : null}
+        </Paper>
       </Fragment>
     )
   }
