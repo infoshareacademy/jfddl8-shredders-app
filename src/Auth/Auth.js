@@ -187,7 +187,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   _logIn: (email, password) => dispatch(logInAsyncActionCreator(email, password)),
-  _signIn: (email, password) => dispatch(signInAsyncActionCreator(email, password))
+  _signIn: (email, password) => dispatch(signInAsyncActionCreator(email, password)),
 })
 
 export default connect(

@@ -33,7 +33,7 @@ const authFetch = (url, options) => {
 
       return data
     })
-    .catch(data => console.log(data))
+    .catch(data => data)
     .finally(() => dispatch(stopFetchingActionCreator()))
 
 }
