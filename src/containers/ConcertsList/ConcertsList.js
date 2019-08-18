@@ -98,7 +98,6 @@ class ConcertsList extends Component {
   }
 }
 
-
 export default withFetchService(
   'concerts',
   fetchs
