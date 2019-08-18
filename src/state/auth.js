@@ -1,12 +1,15 @@
 import jwt from 'jsonwebtoken'
 import { store } from '../store'
 import { addErrorWithSnackActionCreator } from './errors'
+import { fetchWithToken } from './users'
+
 
 const API_KEY = 'AIzaSyAY8yO-AihhNCdcOpVSDcqNWmXs7U5wdVU'
 
 const SIGN_IN_URL = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' + API_KEY
 const SIGN_UP_URL = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' + API_KEY
 const REFRESH_TOKEN_URL = 'https://identitytoolkit.googleapis.com/v1/token?key=' + API_KEY
+const SAVE_USER_URL = 'https://jfddl8-shredders.firebaseio.com/users/'
 
 const LOGGED_IN = 'auth/LOGGED_IN'
 const LOGGED_OUT = 'auth/LOGGED_OUT'
@@ -54,6 +57,14 @@ export const signInAsyncActionCreator = (email, password) => (dispatch, getState
       })
     }
   )
+    .then(data => {
+      const user = jwt.decode(data.idToken)
+      const key = user.user_id
+      fetchWithToken(SAVE_USER_URL + key + '.json?', {
+        method: 'PATCH',
+        body: JSON.stringify(user)
+      })
+    })
 }
 
 export const logInAsyncActionCreator = (email, password) => (dispatch, getState) => {

@@ -3,7 +3,7 @@ import { refreshTokenAsyncActionCreator } from './auth'
 import { addSnackbarActionCreator } from './snackbars'
 import { addErrorWithSnackActionCreator } from './errors'
 
-export default (url, name, mapData) => {
+export default (url, name, mapData, withSnackbars) => {
   const GET = name + '/GET'
   const START_FETCHING = name + '/START_FETCHING'
   const STOP_FETCHING = name + '/STOP_FETCHING'
@@ -71,7 +71,10 @@ export default (url, name, mapData) => {
         dispatch(getAsyncActionCreator())
         return r
       })
-      .then(() => dispatch(addSnackbarActionCreator('Removed', 'green')))
+      .then((data) => {
+        if (withSnackbars) dispatch(addSnackbarActionCreator('Removed', 'green'))
+        return data
+      })
   }
 
   const addAsyncActionCreator = (item, queryString = '') => (dispatch, getState) => {
@@ -83,8 +86,10 @@ export default (url, name, mapData) => {
         method: 'POST',
         body: JSON.stringify(item)
       })
-      .then(() => dispatch(addSnackbarActionCreator('Added', 'green')))
-
+      .then((data) => {
+        if (withSnackbars) dispatch(addSnackbarActionCreator('Added', 'green'))
+        return data
+      })
   }
 
   const toggleFavoriteAsyncActionCreator = (key, isFavorite, queryString = '') => (dispatch, getState) => {
@@ -146,6 +151,7 @@ export default (url, name, mapData) => {
       removeAsyncActionCreator,
       addAsyncActionCreator,
       toggleFavoriteAsyncActionCreator
-    }
+    },
+    fetchWithToken
   }
 }
