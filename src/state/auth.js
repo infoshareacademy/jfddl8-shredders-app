@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken'
 import { store } from '../store'
+import { addErrorWithSnackActionCreator } from './errors'
 
 const API_KEY = 'AIzaSyAY8yO-AihhNCdcOpVSDcqNWmXs7U5wdVU'
 
@@ -33,7 +34,10 @@ const authFetch = (url, options) => {
 
       return data
     })
-    .catch(data => data)
+    .catch(error => {
+      dispatch(addErrorWithSnackActionCreator(error))
+      return error
+    })
     .finally(() => dispatch(stopFetchingActionCreator()))
 
 }

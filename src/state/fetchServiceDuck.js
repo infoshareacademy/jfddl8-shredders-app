@@ -1,5 +1,7 @@
 import { store } from '../store'
 import { refreshTokenAsyncActionCreator } from './auth'
+import { addSnackbarActionCreator } from './snackbars'
+import { addErrorWithSnackActionCreator } from './errors'
 
 export default (url, name, mapData) => {
   const GET = name + '/GET'
@@ -40,10 +42,13 @@ export default (url, name, mapData) => {
         return data
       })
       .catch(error => {
-        alert(error)
+        addErrorWithSnackActionCreator(error)
         return error
       })
-      .finally(() => dispatch(stopFetchingActionCreator()))
+      .finally((data) => {
+        dispatch(stopFetchingActionCreator())
+        return data
+      })
   }
 
 
@@ -66,17 +71,19 @@ export default (url, name, mapData) => {
         dispatch(getAsyncActionCreator())
         return r
       })
+      .then(() => dispatch(addSnackbarActionCreator('Removed', 'green')))
   }
 
   const addAsyncActionCreator = (item, queryString = '') => (dispatch, getState) => {
     const auth = getState().auth
     if (auth.idToken) queryString = queryString + '&auth=' + auth.idToken
 
-    return fetch(url + '.json?' + queryString,
+    return fetchWithToken(url + '.json?' + queryString,
       {
         method: 'POST',
         body: JSON.stringify(item)
       })
+      .then(() => dispatch(addSnackbarActionCreator('Added', 'green')))
 
   }
 

@@ -3,13 +3,15 @@ import thunk from 'redux-thunk'
 
 import auth, { checkIfUSerIsLoggedInAsyncActionCreator } from './state/auth'
 import concerts from './state/concerts'
-import snackbras from './state/snackbars'
+import snackbars from './state/snackbars'
+import errors from './state/errors'
 
 
 const reducer = combineReducers({
   auth,
   concerts,
-  snackbras
+  snackbars,
+  errors
 })
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose

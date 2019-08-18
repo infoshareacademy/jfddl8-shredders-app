@@ -7,11 +7,11 @@ import { SnackbarContent } from '@material-ui/core';
 
 const Snackbar = props => {
   return (
-    <div>
+    <div style={{ position: 'fixed', bottom: 0 }}>
       {props._snackbars.map((snackbar, index) => (
         <MuiSnackbar
           key={snackbar.key}
-          style={{ position: 'absolute', bottom: (30 + 70 * index) }}
+          style={{ position: 'fixed', bottom: (30 + 70 * index) }}
           anchorOrigin={{
             vertical: 'bottom',
             horizontal: 'left',
@@ -29,7 +29,7 @@ const Snackbar = props => {
 }
 
 const mapStateToProps = state => ({
-  _snackbars: state.snackbras.bars
+  _snackbars: state.snackbars.bars
 })
 
 export default connect(

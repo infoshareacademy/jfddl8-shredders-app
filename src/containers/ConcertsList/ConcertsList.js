@@ -13,7 +13,7 @@ import withFetchService from '../../services/withFetchService'
 const styles = {
   paper: { marginTop: 20, padding: '0px 10px 0 10px' },
   progress: {
-    position: 'absolute',
+    position: 'fixed',
     top: 0,
     left: 0,
     width: '100vw',
@@ -25,8 +25,7 @@ const styles = {
     alignItems: 'center',
     marginTop: 30,
     zIndex: 10000
-  },
-
+  }
 }
 
 class ConcertsList extends Component {
