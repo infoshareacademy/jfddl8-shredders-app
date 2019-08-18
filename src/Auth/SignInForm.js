@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Paper, TextField, Button, Typography } from '@material-ui/core'
+import { Paper, TextField, Button, Typography, CircularProgress } from '@material-ui/core'
 
 const styles = {
   paper: {
@@ -20,6 +20,15 @@ const styles = {
     alignItems: 'center',
     height: '100vh',
     width: '100vw'
+  },
+  progress: {
+    width: 40,
+    height: 40,
+  },
+  buttons: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   }
 }
 
@@ -37,7 +46,7 @@ const SignInForm = props => {
     <div style={styles.div}>
       <Paper style={styles.paper}>
         <Typography variant={'h4'}>
-          Sign in !
+          Sign up
       </Typography>
         <TextField
           value={props.email}
@@ -71,23 +80,28 @@ const SignInForm = props => {
           type={'password'}
           helperText={props.errors.notSamePassword ? "Passwords must be the same!" : ''}
         />
-        <Button
-          onClick={props.onSign().click}
-          style={styles.button}
-          variant={'contained'}
-          color={'primary'}
-          disabled={!(enableSubmit)}
-        >
-          SIGN UP
+        <div style={styles.buttons}>
+          <Button
+            onClick={props.onSign().click}
+            style={styles.button}
+            variant={'contained'}
+            color={'primary'}
+            disabled={!(enableSubmit)}
+          >
+            SIGN UP
       </Button>
-        <Button
-          onClick={props.toggleForm}
-          style={styles.button}
-          variant={'contained'}
-          color={'secondary'}
-        >
-          LOG IN
+          <div style={styles.progress}>
+            {props._isFetching ? <CircularProgress /> : null}
+          </div>
+          <Button
+            onClick={props.toggleForm}
+            style={styles.button}
+            variant={'contained'}
+            color={'secondary'}
+          >
+            LOG IN
       </Button>
+        </div>
       </Paper>
     </div>
   )

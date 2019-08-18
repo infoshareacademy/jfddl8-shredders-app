@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Paper, TextField, Button, Typography } from '@material-ui/core'
+import { Paper, TextField, Button, Typography, CircularProgress, Link } from '@material-ui/core'
 
 const styles = {
   paper: {
@@ -20,6 +20,19 @@ const styles = {
     alignItems: 'center',
     height: '100vh',
     width: '100vw'
+  },
+  progress: {
+    width: 40,
+    height: 40,
+  },
+  buttons: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  forgotPassword: {
+    fontSize: 14,
+    cursor: 'pointer',
   }
 }
 
@@ -34,7 +47,7 @@ const LoginForm = props => {
     <div style={styles.div}>
       <Paper style={styles.paper}>
         <Typography variant={'h4'}>
-          Please log in!
+          Please log in
       </Typography>
         <TextField
           value={props.email}
@@ -53,23 +66,37 @@ const LoginForm = props => {
           label={'password'}
           type={'password'}
         />
-        <Button
-          style={styles.button}
-          variant={'contained'}
-          color={'primary'}
-          onClick={props.onLogIn().click}
-          disabled={!enableSubmit}
-        >
-          LOG IN
+        <div style={styles.buttons}>
+          <Button
+            style={styles.button}
+            variant={'contained'}
+            color={'primary'}
+            onClick={props.onLogIn().click}
+            disabled={!enableSubmit}
+          >
+            LOG IN
       </Button>
-        <Button
-          onClick={props.toggleForm}
-          style={styles.button}
-          variant={'contained'}
-          color={'secondary'}
-        >
-          SIGN UP
+          <div style={styles.progress}>
+            {props._isFetching ? <CircularProgress /> : null}
+          </div>
+          <Button
+            onClick={props.toggleForm}
+            style={styles.button}
+            variant={'contained'}
+            color={'secondary'}
+          >
+            SIGN UP
       </Button>
+        </div>
+        <Link
+          style={styles.forgotPassword}
+          onClick={evt => {
+            props.toggleForgotPassword()
+            evt.preventDefault()
+          }}
+        >
+          forgot password?
+        </Link>
       </Paper>
     </div>
   )

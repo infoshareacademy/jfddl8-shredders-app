@@ -5,6 +5,8 @@ import { logInAsyncActionCreator, signInAsyncActionCreator } from '../state/auth
 
 import LogInForm from './LogInForm'
 import SignInForm from './SignInForm'
+import ForgotPasswordForm from './ForgotPasswordForm';
+import SendedPassword from './SendedPassword';
 
 class Auth extends React.Component {
   state = {
@@ -12,6 +14,8 @@ class Auth extends React.Component {
     password: '',
     password2: '',
     showSignInForm: false,
+    showForgotPasswordForm: false,
+    showSendedPassword: false,
     signInInputError: {
       wrongEmail: false,
       shortPassword: false,
@@ -121,6 +125,9 @@ class Auth extends React.Component {
   }
 
   toggleForm = () => this.setState({ showSignInForm: !this.state.showSignInForm })
+  toggleForgotPassword = () => this.setState({ showForgotPasswordForm: !this.state.showForgotPasswordForm })
+  toggleSendedPassword = () => this.setState({ showSendedPassword: !this.state.showSendedPassword })
+
 
   render() {
     return (
@@ -138,16 +145,35 @@ class Auth extends React.Component {
                 onSign={this.onSignIn}
                 toggleForm={this.toggleForm}
                 errors={this.state.signInInputError}
+                _isFetching={this.props._isFetching}
               />
               :
-              <LogInForm
-                email={this.state.email}
-                password={this.state.password}
-                onInputChanged={this.onInputChanged}
-                onLogIn={this.onLogIn}
-                toggleForm={this.toggleForm}
-                errors={this.state.logInInputError}
-              />
+              !this.state.showForgotPasswordForm ?
+                <LogInForm
+                  email={this.state.email}
+                  password={this.state.password}
+                  onInputChanged={this.onInputChanged}
+                  onLogIn={this.onLogIn}
+                  toggleForm={this.toggleForm}
+                  errors={this.state.logInInputError}
+                  _isFetching={this.props._isFetching}
+                  toggleForgotPassword={this.toggleForgotPassword}
+                />
+                :
+                !this.state.showSendedPassword ?
+                  <ForgotPasswordForm
+                    email={this.state.email}
+                    onInputChanged={this.onInputChanged}
+                    onLogIn={this.onLogIn}
+                    errors={this.state.logInInputError}
+                    toggleForgotPassword={this.toggleForgotPassword}
+                    toggleSendedPassword={this.toggleSendedPassword}
+                  />
+                  :
+                  <SendedPassword
+                    toggleForgotPassword={this.toggleForgotPassword}
+                    toggleSendedPassword={this.toggleSendedPassword}
+                  />
         }
       </div>
     )
@@ -155,12 +181,13 @@ class Auth extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  _isUserLoggedIn: state.auth.isUserLoggedIn
+  _isUserLoggedIn: state.auth.isUserLoggedIn,
+  _isFetching: state.auth.isFetching
 })
 
 const mapDispatchToProps = dispatch => ({
   _logIn: (email, password) => dispatch(logInAsyncActionCreator(email, password)),
-  _signIn: (email, password) => dispatch(signInAsyncActionCreator(email, password))
+  _signIn: (email, password) => dispatch(signInAsyncActionCreator(email, password)),
 })
 
 export default connect(
