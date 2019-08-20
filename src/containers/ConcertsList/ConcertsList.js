@@ -9,6 +9,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { fetchs } from '../../state/concerts'
 
 import withFetchService from '../../services/withFetchService'
+import { mapObjectToArray } from '../../services/mapObjectToArray'
 
 const styles = {
   paper: { marginTop: 20, padding: '0px 10px 0 10px' },
@@ -40,8 +41,14 @@ class ConcertsList extends Component {
     }
   }
 
+  interval = null
+
   componentDidMount() {
     this.props._getData()
+
+    fetch('https://jfddl8-shredders.firebaseio.com/concertList/.json?auth=' + localStorage.getItem('idToken'))
+      .then(r => r.json())
+      .then(data => console.log(mapObjectToArray(data), this.props._data))
   }
 
   onChangeHanler = (key) => {
