@@ -11,6 +11,8 @@ import { fetchs } from '../../state/concerts'
 import withFetchService from '../../services/withFetchService'
 import { mapObjectToArray } from '../../services/mapObjectToArray'
 
+import { isEqual } from 'lodash'
+
 const styles = {
   paper: { marginTop: 20, padding: '0px 10px 0 10px' },
   progress: {
@@ -46,9 +48,20 @@ class ConcertsList extends Component {
   componentDidMount() {
     this.props._getData()
 
+    this.interval = setInterval(this.liveUpdate, 10000)
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval)
+  }
+
+  liveUpdate = () => {
     fetch('https://jfddl8-shredders.firebaseio.com/concertList/.json?auth=' + localStorage.getItem('idToken'))
       .then(r => r.json())
-      .then(data => console.log(mapObjectToArray(data), this.props._data))
+      .then(data => {
+        if (!isEqual(mapObjectToArray(data), this.props._data))
+          this.props._getData()
+      })
   }
 
   onChangeHanler = (key) => {
