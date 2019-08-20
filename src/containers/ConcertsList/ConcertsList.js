@@ -9,6 +9,9 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { fetchs } from '../../state/concerts'
 
 import withFetchService from '../../services/withFetchService'
+import { mapObjectToArray } from '../../services/mapObjectToArray'
+
+import { isEqual } from 'lodash'
 
 const styles = {
   paper: { marginTop: 20, padding: '0px 10px 0 10px' },
@@ -23,7 +26,6 @@ const styles = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 30,
     zIndex: 10000
   }
 }
@@ -41,8 +43,25 @@ class ConcertsList extends Component {
     }
   }
 
+  interval = null
+
   componentDidMount() {
     this.props._getData()
+
+    this.interval = setInterval(this.liveUpdate, 10000)
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval)
+  }
+
+  liveUpdate = () => {
+    fetch('https://jfddl8-shredders.firebaseio.com/concertList/.json?auth=' + localStorage.getItem('idToken'))
+      .then(r => r.json())
+      .then(data => {
+        if (!isEqual(mapObjectToArray(data), this.props._data))
+          this.props._getData()
+      })
   }
 
   onChangeHanler = (key) => {
@@ -63,7 +82,7 @@ class ConcertsList extends Component {
 
   render() {
     const filteredConcerts = this.props._data && this.props._data.filter(el => {
-      const isFavorite = this.state.filters.isFavorite ? el.isFavorite : true
+      const isFavorite = this.state.filters.isFavorite ? (typeof el.isFavorite == 'object' && el.isFavorite.includes(this.props._userId)) : true
       const isBandMatch = el.band ? el.band.toLowerCase().includes(this.state.filters.band.toLowerCase()) : true
       const isDateMatch = el.date ? el.date.includes(this.state.filters.date) : true
       const isPlaceMatch = el.location ? el.location.toLowerCase().includes(this.state.filters.location.toLowerCase()) : true
@@ -71,6 +90,8 @@ class ConcertsList extends Component {
 
       return isFavorite && isBandMatch && isDateMatch && isGenreMatch && isPlaceMatch
     })
+
+
     return (
       <Fragment>
         {this.props._isFetching ? <div style={styles.progress}><CircularProgress size={80} /></div> : null}
@@ -90,6 +111,7 @@ class ConcertsList extends Component {
               listWithDialog
               deleteConcert={this.props._deleteItem}
               toggleFavoriteInBase={this.props._toggleFavorite}
+              _userId={this.props._userId}
             />
             : null}
         </Paper>

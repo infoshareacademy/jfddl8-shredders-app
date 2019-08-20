@@ -11,11 +11,11 @@ const styles = {
   },
   label: {
     fontFamily: 'roboto',
-    padding: '10px',
-    fontSize: '1.25em',
+    padding: '12px',
+    fontSize: '1em',
     fontWeight: '700',
     color: 'white',
-    backgroundColor: 'blue',
+    backgroundColor: '#404ac2',
     borderRadius: '5px',
     display: 'inline-block',
     cursor: 'pointer'
@@ -26,9 +26,8 @@ const UploadButton = props => {
   return (
     <div>
       <div>
-        <input type="file" name="file" id="file" style={styles.input} onChange={props.onChange} />
-        <label style={styles.label} for="file">Choose a photo</label>
-
+        <input type="file" name="file" id="file" style={styles.input} onChange={props.onImageChange} />
+        <label style={styles.label} htmlFor="file">Choose your photo</label>
       </div>
     </div>
   )

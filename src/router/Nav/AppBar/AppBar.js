@@ -9,7 +9,9 @@ import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
-import { Button } from '@material-ui/core';
+import { Button } from '@material-ui/core'
+import AccountCircle from '@material-ui/icons/AccountCircle'
+import { Link } from 'react-router-dom'
 
 const styles = {
   title: { flexGrow: 1 },
@@ -23,11 +25,14 @@ const AppBar = (props) => {
           <IconButton edge="start" color="inherit" aria-label="menu" onClick={props.toggleSideBar}>
             <MenuIcon />
           </IconButton>
+
           <Typography
             style={styles.title}
             variant="h6"
           >
-            MusicTripper
+            <Link to='/' style={{ textDecoration: 'none', color: 'black' }}>
+              MusicTripper
+            </Link>
           </Typography>
           <Button
             onClick={() => {
@@ -37,6 +42,11 @@ const AppBar = (props) => {
           >
             LOG OUT
           </Button>
+          <Link to='/account'>
+            <IconButton>
+              <AccountCircle />
+            </IconButton>
+          </Link>
         </Toolbar>
       </MuiAppBar>
     </div>
