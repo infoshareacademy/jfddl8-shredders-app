@@ -7,7 +7,7 @@ import Router from './router/Router'
 import Nav from './router/Nav'
 import AddForm from './containers/AddForm'
 import ConcertsList from './containers/ConcertsList/ConcertsList'
-
+import Account from './containers/Account'
 import Dashboard from './containers/Dashboard'
 
 
@@ -20,6 +20,7 @@ const App = () => (
       <Route path={'/dashboard'} component={Dashboard} />
       <Route path={'/add-form'} component={AddForm} />
       <Route path={'/concerts-list/:concertKey?'} component={ConcertsList} />
+      <Route path={'/account'} component={Account} />
     </Router>
   </div>
 )

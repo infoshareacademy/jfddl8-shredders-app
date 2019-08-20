@@ -57,6 +57,7 @@ class List extends React.Component {
                 data={data}
                 deleteConcert={this.props.deleteConcert}
                 toggleFavoriteInBase={this.props.toggleFavoriteInBase}
+                _userId={this.props._userId}
               />
               :
               <ListItem data={data} />

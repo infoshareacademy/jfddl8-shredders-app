@@ -6,7 +6,8 @@ const withFetchService = (name, fetchActions) => (InnerComponent) => {
 
   const mapStateToProps = state => ({
     _data: state[name].data,
-    _isFetching: state[name].isFetching
+    _isFetching: state[name].isFetching,
+    _userId: state.auth.userData.user_id
   })
 
   const mapDispatchToProps = dispatch => ({

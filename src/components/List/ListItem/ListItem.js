@@ -13,7 +13,7 @@ const ListItem = props => {
     <div onClick={props.onClick} className={'listItem'}>
       <MuiListItem alignItems="flex-start">
         <ListItemAvatar>
-          <Avatar alt="concert" src="http://lorempixel.com/200/200" />
+          <Avatar alt="concert" src={props.data.photo || "http://lorempixel.com/200/200"} />
         </ListItemAvatar>
         <ListItemText
           primary={props.data.band}
