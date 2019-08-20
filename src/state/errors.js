@@ -3,10 +3,9 @@ import { addSnackbarActionCreator } from './snackbars'
 const ADD = 'errors/ADD'
 
 export const addErrorWithSnackActionCreator = data => dispatch => {
-  console.log(data.error)
   const message = data && data.error && data.error.message
 
-  if (message === 'EMAIL_NOT_FOUND' || message === "INVALID_PASSWORD")
+  if (message === 'EMAIL_NOT_FOUND' || message === "INVALID_PASSWORD" || message === "INVALID_EMAIL")
     dispatch(addSnackbarActionCreator('Invalid email or password.', 'red'))
 
   if (message === 'EMAIL_EXISTS')

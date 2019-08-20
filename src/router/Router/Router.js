@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import { BrowserRouter } from 'react-router-dom'
 
 
@@ -8,7 +8,7 @@ const Router = props => (
       {props.children}
     </div>
   </BrowserRouter>
-);
+)
 
 
-export default Router;
+export default Router

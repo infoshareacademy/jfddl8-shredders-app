@@ -9,6 +9,7 @@ const API_KEY = 'AIzaSyAY8yO-AihhNCdcOpVSDcqNWmXs7U5wdVU'
 const SIGN_IN_URL = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' + API_KEY
 const SIGN_UP_URL = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' + API_KEY
 const REFRESH_TOKEN_URL = 'https://identitytoolkit.googleapis.com/v1/token?key=' + API_KEY
+const CHANGE_PASSWORD_URL = 'https://identitytoolkit.googleapis.com/v1/accounts:update?key=' + API_KEY
 const SAVE_USER_URL = 'https://jfddl8-shredders.firebaseio.com/users/'
 
 const LOGGED_IN = 'auth/LOGGED_IN'
@@ -75,6 +76,23 @@ export const logInAsyncActionCreator = (email, password) => (dispatch, getState)
       method: 'POST',
       body: JSON.stringify({
         email,
+        password,
+        returnSecureToken: true
+      })
+    }
+  )
+}
+
+export const changePasswordAsyncActionCreator = (password) => (dispatch, getState) => {
+  const idToken = getState().auth.idToken
+
+  dispatch(startFetchingActionCreator())
+  return authFetch(
+    CHANGE_PASSWORD_URL,
+    {
+      method: 'POST',
+      body: JSON.stringify({
+        idToken,
         password,
         returnSecureToken: true
       })

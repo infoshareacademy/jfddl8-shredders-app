@@ -93,11 +93,23 @@ export default (url, name, mapData, withSnackbars) => {
   }
 
   const toggleFavoriteAsyncActionCreator = (key, isFavorite, queryString = '') => (dispatch, getState) => {
+    const userId = getState().auth.userData.user_id
+
+    const favoriteList = (
+      typeof isFavorite !== 'object' ?
+        [userId]
+        :
+        isFavorite.includes(userId) ?
+          isFavorite.filter(user => user !== userId)
+          :
+          [...isFavorite, userId]
+    )
+
     return fetchWithToken(url + key + '.json?' + queryString,
       {
         method: 'PATCH',
         body: JSON.stringify({
-          isFavorite
+          isFavorite: favoriteList
         })
       })
       .then((r) => {

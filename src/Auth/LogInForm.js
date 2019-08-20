@@ -54,6 +54,7 @@ const LoginForm = props => {
           onChange={props.onInputChanged('email')}
           onFocus={props.onLogIn().emailInputFocus}
           onBlur={props.onLogIn().emailInputBlur}
+          onKeyPress={evt => { if (evt.key === 'Enter' && enableSubmit) props.onLogIn().click() }}
           error={props.errors.wrongEmail}
           fullWidth
           label={"e-mail"}
@@ -62,6 +63,7 @@ const LoginForm = props => {
         <TextField
           value={props.password}
           onChange={props.onInputChanged('password')}
+          onKeyPress={evt => { if (evt.key === 'Enter') props.onLogIn().click() }}
           fullWidth
           label={'password'}
           type={'password'}

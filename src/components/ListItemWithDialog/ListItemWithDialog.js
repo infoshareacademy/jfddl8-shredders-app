@@ -66,8 +66,12 @@ const ListItemWithDialog = (props) => {
 
         <Paper style={styles.paper}>
           <div style={styles.favoriteDiv}>
-            <IconButton onClick={() => props.toggleFavoriteInBase(props.data.key, !props.data.isFavorite)} color={'secondary'}  >
-              {props.data.isFavorite ? <Favorite /> : <FavoriteBorder color={'action'} />}
+            <IconButton onClick={() => props.toggleFavoriteInBase(props.data.key, props.data.isFavorite)} color={'secondary'}  >
+              {typeof props.data.isFavorite === 'object' && props.data.isFavorite.includes(props._userId) ?
+                <Favorite />
+                :
+                <FavoriteBorder color={'action'} />
+              }
             </IconButton>
             <IconButton onClick={() => props.history.push('/concerts-list')}>
               <CloseIcon />
@@ -77,7 +81,7 @@ const ListItemWithDialog = (props) => {
           <Grid container spacing={2}>
             <Grid item style={{ marginLeft: 'auto', marginRight: 'auto' }}>
               <ButtonBase style={styles.image}>
-                <img style={styles.img} alt="concert" src="http://lorempixel.com/200/200" />
+                <img style={styles.img} alt="concert" src={props.data.photo || "http://lorempixel.com/200/200"} />
               </ButtonBase>
             </Grid>
             <Grid item xs={12} sm container>
