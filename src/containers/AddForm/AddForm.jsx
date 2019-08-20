@@ -9,6 +9,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { Paper } from '@material-ui/core'
 import MenuItem from '@material-ui/core/MenuItem';
 import MuiTextField from '@material-ui/core/TextField';
+import UploadButton from '../../components/UploadButton/UploadButton';
 
 class AddForm extends React.Component {
   state = {
@@ -175,6 +176,7 @@ class AddForm extends React.Component {
             handleOnClick={this.onSendData}
           />
         </form>
+        <UploadButton />
       </Paper>
     )
   }
