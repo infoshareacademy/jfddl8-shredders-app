@@ -17,7 +17,7 @@ const LOGGED_OUT = 'auth/LOGGED_OUT'
 const START_FETCHING = '/START_FETCHING'
 const STOP_FETCHING = '/STOP_FETCHING'
 
-const authFetch = (url, options) => {
+export const authFetch = (url, options) => {
   const dispatch = store.dispatch
   dispatch(startFetchingActionCreator())
 

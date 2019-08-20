@@ -4,6 +4,8 @@ import { connect } from 'react-redux'
 import { changePasswordAsyncActionCreator } from '../../state/auth'
 import { addSnackbarActionCreator } from '../../state/snackbars'
 import UploadButton from '../../components/UploadButton/UploadButton'
+import { authFetch } from '../../state/auth'
+import { store } from '../../store'
 
 import { Paper, Typography, TextField, Button, CircularProgress } from '@material-ui/core'
 
@@ -24,6 +26,14 @@ const styles = {
     margin: 15,
     width: 160
   },
+  photoContainer: {
+    display: 'flex',
+    justifyContent: 'center'
+  },
+  photo: {
+    maxWidth: 300,
+    maxHeight: 300
+  }
 }
 
 class Account extends React.Component {
@@ -38,18 +48,32 @@ class Account extends React.Component {
 
   onInputChanged = (input) => (evt) => this.setState({ [input]: evt.target.value })
 
+  uploadUserImage = (options) => {
+    const userID = store.getState().auth.userData.user_id
+    console.log(userID)
+    const imageUrl = 'https://jfddl8-shredders.firebaseio.com/users/' + userID + '/photo'
+    authFetch(imageUrl, options)
+  }
+
   onImageChange = (event) => {
     let imageData = event.target.files[0]
     let reader = new FileReader()
+    if (!imageData) {
+      return
+    }
     reader.readAsDataURL(imageData)
+    console.log(imageData)
     if (imageData.name.endsWith('.jpg') || imageData.name.endsWith('.png')) {
-      reader.onload = (upload) => {
-        this.setState({
-
-          image: upload.target.result
-        })
+      if (imageData.size < 1048576) {
+        reader.onload = (upload) => {
+          this.uploadUserImage({
+            method: 'PATCH',
+            body: upload.target.result
+          })
+        }
+      } else {
+        alert('Zbyt duży rozmiar zdjęcia! Maksymalnie 512 KB!')
       }
-      setTimeout(() => console.log(this.state), 1000)
     } else {
       alert('Niepoprawny format zdjęcia')
     }
@@ -121,6 +145,9 @@ class Account extends React.Component {
 
     return (
       <Paper style={{ padding: '20px' }}>
+        <div style={styles.photoContainer}>
+          <img style={styles.photo} src={this.state.image} alt='Profile img' />
+        </div>
         <Typography style={styles.changePassword} variant={'h6'}>
           Change password:
         </Typography>
