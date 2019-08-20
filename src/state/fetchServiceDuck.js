@@ -162,7 +162,7 @@ export default (url, name, mapData, withSnackbars) => {
       getAsyncActionCreator,
       removeAsyncActionCreator,
       addAsyncActionCreator,
-      toggleFavoriteAsyncActionCreator
+      toggleFavoriteAsyncActionCreator,
     },
     fetchWithToken
   }
