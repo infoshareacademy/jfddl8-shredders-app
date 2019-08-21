@@ -4,9 +4,7 @@ import { connect } from 'react-redux'
 import { changePasswordAsyncActionCreator } from '../../state/auth'
 import { addSnackbarActionCreator } from '../../state/snackbars'
 import UploadButton from '../../components/UploadButton/UploadButton'
-import { authFetch } from '../../state/auth'
-import { store } from '../../store'
-
+import fetchService from '../../state/fetchServiceDuck'
 import { Paper, Typography, TextField, Button, CircularProgress } from '@material-ui/core'
 
 const styles = {
@@ -46,37 +44,49 @@ class Account extends React.Component {
     image: null
   }
 
+  componentDidMount() {
+    this.getUser()
+  }
+
+  getUser = () => {
+
+    const imageUrl = 'https://jfddl8-shredders.firebaseio.com/users/' + this.props._userId + '.json?'
+    fetchWithToken(imageUrl)
+      .then(data => this.setState({
+        image: data.photo
+      }))
+
+  }
+
   onInputChanged = (input) => (evt) => this.setState({ [input]: evt.target.value })
 
   uploadUserImage = (options) => {
-    const userID = store.getState().auth.userData.user_id
-    console.log(userID)
-    const imageUrl = 'https://jfddl8-shredders.firebaseio.com/users/' + userID + '/photo/'
-    authFetch(imageUrl, options)
+    const imageUrl = 'https://jfddl8-shredders.firebaseio.com/users/' + this.props._userId + '.json?'
+    fetchWithToken(imageUrl, options)
+      .then(this.getUser)
   }
 
   onImageChange = (event) => {
     let imageData = event.target.files[0]
     let reader = new FileReader()
+    console.log(imageData)
     if (!imageData) {
       return
     }
     reader.readAsDataURL(imageData)
-    console.log(imageData)
     if (imageData.name.endsWith('.jpg') || imageData.name.endsWith('.png')) {
       if (imageData.size < 1048576) {
         reader.onload = (upload) => {
-          // console.log(JSON.stringify(upload.target.result))
           this.uploadUserImage({
             method: 'PATCH',
-            body: JSON.stringify(upload.target.result)
+            body: JSON.stringify({ photo: upload.target.result })
           })
         }
       } else {
         alert('Zbyt duży rozmiar zdjęcia! Maksymalnie 512 KB!')
       }
     } else {
-      alert('Niepoprawny format zdjęcia')
+      alert('Niepoprawny format zdjęcia! Tylko .jpg i .png')
     }
   }
 
@@ -147,7 +157,7 @@ class Account extends React.Component {
     return (
       <Paper style={{ padding: '20px' }}>
         <div style={styles.photoContainer}>
-          <img style={styles.photo} src={this.state.image} alt='Profile img' />
+          {this.state.image ? <img style={styles.photo} src={this.state.image} alt='Profile img' /> : null}
         </div>
         <Typography style={styles.changePassword} variant={'h6'}>
           Change password:
@@ -191,15 +201,19 @@ class Account extends React.Component {
             Submit
           </Button>
           <UploadButton onImageChange={this.onImageChange} />
+          <br />
           {this.props._isFetching ? <CircularProgress /> : null}
         </div>
       </Paper>
     )
   }
 }
+const fetchWithToken = fetchService('', 'auth').fetchWithToken
 
 const mapStateToProps = state => ({
-  _isFetching: state.auth.isFetching
+  _isFetching: state.auth.isFetching,
+  _isFetching2: state.auth.isFetching,
+  _userId: state.auth.userData.user_id
 })
 
 const mapDispatchToProps = dispatch => ({
