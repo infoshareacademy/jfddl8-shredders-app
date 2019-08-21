@@ -51,7 +51,7 @@ class Account extends React.Component {
   uploadUserImage = (options) => {
     const userID = store.getState().auth.userData.user_id
     console.log(userID)
-    const imageUrl = 'https://jfddl8-shredders.firebaseio.com/users/' + userID + '/photo'
+    const imageUrl = 'https://jfddl8-shredders.firebaseio.com/users/' + userID + '/photo/'
     authFetch(imageUrl, options)
   }
 
@@ -66,9 +66,10 @@ class Account extends React.Component {
     if (imageData.name.endsWith('.jpg') || imageData.name.endsWith('.png')) {
       if (imageData.size < 1048576) {
         reader.onload = (upload) => {
+          // console.log(JSON.stringify(upload.target.result))
           this.uploadUserImage({
             method: 'PATCH',
-            body: upload.target.result
+            body: JSON.stringify(upload.target.result)
           })
         }
       } else {
