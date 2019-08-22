@@ -12,6 +12,8 @@ import MenuIcon from '@material-ui/icons/Menu'
 import { Button } from '@material-ui/core'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import { Link } from 'react-router-dom'
+import { FacebookShareButton } from 'react-share'
+import ShareIcon from '@material-ui/icons/Share'
 
 const styles = {
   title: { flexGrow: 1 },
@@ -26,14 +28,32 @@ const AppBar = (props) => {
             <MenuIcon />
           </IconButton>
 
-          <Typography
-            style={styles.title}
-            variant="h6"
-          >
-            <Link to='/' style={{ textDecoration: 'none', color: 'black' }}>
-              MusicTripper
+          {document.body.clientWidth > 400 ?
+            <Typography
+              style={styles.title}
+              variant="h6"
+            >
+              <Link to='/' style={{ textDecoration: 'none', color: 'black', lineHeight: 1 }}>
+                Music Tripper
             </Link>
-          </Typography>
+            </Typography>
+            :
+            <Typography
+              style={styles.title}
+              variant="h6"
+            >
+            </Typography>
+          }
+          <Link to='/account'>
+            <IconButton>
+              <AccountCircle />
+            </IconButton>
+          </Link>
+          <IconButton style={{ width: 48, height: 48 }} >
+            <FacebookShareButton url={'http://app.music-tripper.jfddl8.is-academy.pl/'}>
+              <ShareIcon />
+            </FacebookShareButton>
+          </IconButton>
           <Button
             onClick={() => {
               props._logOut()
@@ -42,11 +62,6 @@ const AppBar = (props) => {
           >
             LOG OUT
           </Button>
-          <Link to='/account'>
-            <IconButton>
-              <AccountCircle />
-            </IconButton>
-          </Link>
         </Toolbar>
       </MuiAppBar>
     </div>
