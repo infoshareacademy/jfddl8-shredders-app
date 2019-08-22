@@ -53,7 +53,7 @@ class Account extends React.Component {
     const imageUrl = 'https://jfddl8-shredders.firebaseio.com/users/' + this.props._userId + '.json?'
     fetchWithToken(imageUrl)
       .then(data => this.setState({
-        image: data.photo
+        image: data && data.photo
       }))
 
   }
@@ -83,10 +83,10 @@ class Account extends React.Component {
           })
         }
       } else {
-        alert('Zbyt duży rozmiar zdjęcia! Maksymalnie 512 KB!')
+        this.props._addSnack('Zbyt duży rozmiar zdjęcia! Maksymalnie 512 KB!', 'red')
       }
     } else {
-      alert('Niepoprawny format zdjęcia! Tylko .jpg i .png')
+      this.props._addSnack('Niepoprawny format zdjęcia! Tylko .jpg i .png', 'red')
     }
   }
 
