@@ -25,5 +25,4 @@ export const store = createStore(
   )
 )
 
-
 store.dispatch(checkIfUSerIsLoggedInAsyncActionCreator())
