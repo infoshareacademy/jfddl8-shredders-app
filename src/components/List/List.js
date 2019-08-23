@@ -3,6 +3,7 @@ import React, { Fragment } from 'react'
 import ListItem from './ListItem'
 import PaginationPanel from './PaginationPanel/PaginationPanel'
 import ListItemWithDialog from '../ListItemWithDialog'
+import { Typography } from '@material-ui/core';
 
 const styles = {
   noResult: {
@@ -49,22 +50,33 @@ class List extends React.Component {
     const currentPage = paginationLength - 1 < this.state.concertsIndex ? 0 : this.state.concertsIndex
     return (
       <div>
-        {concertsToShow && concertsToShow.length === 0 && <div style={styles.noResult}>No results, try with another filters!</div>}
-        {concertsToShow && concertsToShow.length !== 0 && concertsToShow[currentPage].map(data => (
-          <Fragment key={data.key}>
-            {this.props.listWithDialog
-              ?
-              <ListItemWithDialog
-                data={data}
-                deleteConcert={this.props.deleteConcert}
-                toggleFavoriteInBase={this.props.toggleFavoriteInBase}
-                _userId={this.props._userId}
-              />
-              :
-              <ListItem data={data} />
-            }
-          </Fragment>
-        ))}
+        {
+          concertsToShow &&
+          concertsToShow.length === 0 &&
+          <div style={styles.noResult}>
+            <Typography>
+              No results, try with another filters!
+              </Typography>
+          </div>
+        }
+        {
+          concertsToShow &&
+          concertsToShow.length !== 0 &&
+          concertsToShow[currentPage].map(data => (
+            <Fragment key={data.key}>
+              {this.props.listWithDialog
+                ?
+                <ListItemWithDialog
+                  data={data}
+                  deleteConcert={this.props.deleteConcert}
+                  toggleFavoriteInBase={this.props.toggleFavoriteInBase}
+                  _userId={this.props._userId}
+                />
+                :
+                <ListItem data={data} />
+              }
+            </Fragment>
+          ))}
         {paginationLength > 1
           ?
           <PaginationPanel
