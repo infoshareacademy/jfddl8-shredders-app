@@ -1,10 +1,8 @@
 import fetchServiceDuck from './fetchServiceDuck'
-import { mapObjectToArray } from '../services/mapObjectToArray'
 
 const fetchConcerts = fetchServiceDuck(
   'https://jfddl8-shredders.firebaseio.com/users/',
-  'users',
-  mapObjectToArray
+  'users'
 )
 
 export const fetchWithToken = fetchConcerts.fetchWithToken

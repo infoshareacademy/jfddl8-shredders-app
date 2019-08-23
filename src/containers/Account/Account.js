@@ -3,9 +3,13 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { changePasswordAsyncActionCreator } from '../../state/auth'
 import { addSnackbarActionCreator } from '../../state/snackbars'
+import { fetchs } from '../../state/users'
+
 import UploadButton from '../../components/UploadButton/UploadButton'
 import fetchService from '../../state/fetchServiceDuck'
 import { Paper, Typography, TextField, Button, CircularProgress } from '@material-ui/core'
+import AccountCircle from '@material-ui/icons/AccountCircle'
+
 
 const styles = {
   changePassword: { textAlign: 'center', padding: 20 },
@@ -44,32 +48,17 @@ class Account extends React.Component {
     image: null
   }
 
-  componentDidMount() {
-    this.getUser()
-  }
-
-  getUser = () => {
-
-    const imageUrl = 'https://jfddl8-shredders.firebaseio.com/users/' + this.props._userId + '.json?'
-    fetchWithToken(imageUrl)
-      .then(data => this.setState({
-        image: data && data.photo
-      }))
-
-  }
-
   onInputChanged = (input) => (evt) => this.setState({ [input]: evt.target.value })
 
   uploadUserImage = (options) => {
-    const imageUrl = 'https://jfddl8-shredders.firebaseio.com/users/' + this.props._userId + '.json?'
-    fetchWithToken(imageUrl, options)
-      .then(this.getUser)
+    const imageUrl = 'https://jfddl8-shredders.firebaseio.com/users/' + this.props._userId
+    fetchWithToken(imageUrl + '.json?', options)
+      .then(() => this.props._getUser(imageUrl))
   }
 
   onImageChange = (event) => {
     let imageData = event.target.files[0]
     let reader = new FileReader()
-    console.log(imageData)
     if (!imageData) {
       return
     }
@@ -157,7 +146,11 @@ class Account extends React.Component {
     return (
       <Paper style={{ padding: '20px' }}>
         <div style={styles.photoContainer}>
-          {this.state.image ? <img style={styles.photo} src={this.state.image} alt='Profile img' /> : null}
+          {this.props._user && this.props._user.photo ?
+            <img style={styles.photo} src={this.props._user.photo} alt='Profile img' />
+            :
+            <AccountCircle style={{ width: 200, height: 200 }} />
+          }
         </div>
         <Typography style={styles.changePassword} variant={'h6'}>
           Change password:
@@ -212,13 +205,14 @@ const fetchWithToken = fetchService('', 'auth').fetchWithToken
 
 const mapStateToProps = state => ({
   _isFetching: state.auth.isFetching,
-  _isFetching2: state.auth.isFetching,
-  _userId: state.auth.userData.user_id
+  _userId: state.auth.userData.user_id,
+  _user: state.users.data
 })
 
 const mapDispatchToProps = dispatch => ({
   _changePassword: password => dispatch(changePasswordAsyncActionCreator(password)),
-  _addSnack: (text, color) => dispatch(addSnackbarActionCreator(text, color))
+  _addSnack: (text, color) => dispatch(addSnackbarActionCreator(text, color)),
+  _getUser: (url) => dispatch(fetchs.getAsyncActionCreator(url))
 })
 
 export default connect(
