@@ -52,9 +52,9 @@ export default (url, name, mapData, withSnackbars) => {
   }
 
 
-  const getAsyncActionCreator = (queryString = '') => (dispatch, getState) => {
+  const getAsyncActionCreator = (get = url, queryString = '') => (dispatch, getState) => {
 
-    fetchWithToken(url + '.json?' + queryString)
+    fetchWithToken(get + '.json?' + queryString)
       .then(data => {
         const mappedData = mapData ? mapData(data) : data
         dispatch(getActionCreator(mappedData))
