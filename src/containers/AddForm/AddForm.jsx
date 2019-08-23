@@ -108,7 +108,7 @@ class AddForm extends React.Component {
       { label: 'Date: DD/MM/YYYY', functionArg: 'date', helperText: 'Invalid date format!' },
       { label: 'Description', functionArg: 'description', helperText: 'Please fill in before submitting!' },
       { label: 'Location', functionArg: 'location', helperText: 'Please fill in before submitting!' },
-      { label: 'Photo', functionArg: 'photo', helperText: 'Please fill in a valid url!' },
+      { label: 'Photo URL', functionArg: 'photo', helperText: 'Please fill in a valid url!' },
       { label: 'Ticket price', functionArg: 'ticketPrice', helperText: 'Please fill in a number!' }
     ]
 

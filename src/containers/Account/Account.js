@@ -41,7 +41,7 @@ class Account extends React.Component {
     newPasswordError: false,
     newPassword2Error: false,
     disabledInputs: false,
-    image: null
+    image: ''
   }
 
   componentDidMount() {
@@ -49,7 +49,6 @@ class Account extends React.Component {
   }
 
   getUser = () => {
-
     const imageUrl = 'https://jfddl8-shredders.firebaseio.com/users/' + this.props._userId + '.json?'
     fetchWithToken(imageUrl)
       .then(data => this.setState({
@@ -69,7 +68,6 @@ class Account extends React.Component {
   onImageChange = (event) => {
     let imageData = event.target.files[0]
     let reader = new FileReader()
-    console.log(imageData)
     if (!imageData) {
       return
     }
@@ -83,10 +81,10 @@ class Account extends React.Component {
           })
         }
       } else {
-        this.props._addSnack('Zbyt duży rozmiar zdjęcia! Maksymalnie 512 KB!', 'red')
+        this.props._addSnack('Image size too big! Max file size 1MB!', 'red')
       }
     } else {
-      this.props._addSnack('Niepoprawny format zdjęcia! Tylko .jpg i .png', 'red')
+      this.props._addSnack('Wrong image format! Only .jpg and .png allowed!', 'red')
     }
   }
 
