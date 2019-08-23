@@ -30,8 +30,8 @@ const Dashboard = (props) => (
     <Typography> W naszej aplikacji możesz zrobić następujące rzeczy:</Typography>
     <Typography variant={'subtitle1'}>
       <ul>
-        <li>Przeglądać wszystkie koncerty w całej Polsce;</li>
-        <li>Dodawać interesujące Cię eventy do ulubionych;</li>
+        <li>Przeglądać wszystkie koncerty w całej Polsce</li>
+        <li>Dodawać interesujące Cię eventy do ulubionych</li>
       </ul>
       <br />
       <br />
