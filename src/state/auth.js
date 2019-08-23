@@ -14,10 +14,10 @@ const SAVE_USER_URL = 'https://jfddl8-shredders.firebaseio.com/users/'
 
 const LOGGED_IN = 'auth/LOGGED_IN'
 const LOGGED_OUT = 'auth/LOGGED_OUT'
-const START_FETCHING = '/START_FETCHING'
-const STOP_FETCHING = '/STOP_FETCHING'
+const START_FETCHING = 'auth/START_FETCHING'
+const STOP_FETCHING = 'auth/STOP_FETCHING'
 
-const authFetch = (url, options) => {
+export const authFetch = (url, options) => {
   const dispatch = store.dispatch
   dispatch(startFetchingActionCreator())
 
@@ -60,11 +60,13 @@ export const signInAsyncActionCreator = (email, password) => (dispatch, getState
   )
     .then(data => {
       const user = jwt.decode(data.idToken)
-      const key = user.user_id
-      fetchWithToken(SAVE_USER_URL + key + '.json?', {
-        method: 'PATCH',
-        body: JSON.stringify(user)
-      })
+      const key = user && user.user_id
+      if (key) {
+        fetchWithToken(SAVE_USER_URL + key + '.json?', {
+          method: 'PATCH',
+          body: JSON.stringify(user)
+        })
+      }
     })
 }
 
