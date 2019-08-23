@@ -43,13 +43,14 @@ class List extends React.Component {
   }
 
   render() {
-    const concertsToShow = this.concertsDivide().concertsToShow
-    const paginationLength = this.concertsDivide().paginationLength
-
+    const concertsDivide = this.concertsDivide()
+    const concertsToShow = concertsDivide.concertsToShow
+    const paginationLength = concertsDivide.paginationLength
+    const currentPage = paginationLength - 1 < this.state.concertsIndex ? 0 : this.state.concertsIndex
     return (
       <div>
         {concertsToShow && concertsToShow.length === 0 && <div style={styles.noResult}>No results, try with another filters!</div>}
-        {concertsToShow && concertsToShow.length !== 0 && concertsToShow[this.state.concertsIndex].map(data => (
+        {concertsToShow && concertsToShow.length !== 0 && concertsToShow[currentPage].map(data => (
           <Fragment key={data.key}>
             {this.props.listWithDialog
               ?
@@ -69,7 +70,7 @@ class List extends React.Component {
           <PaginationPanel
             paginationLength={paginationLength}
             changePage={this.changeConcertsIndex}
-            currentPage={this.state.concertsIndex}
+            currentPage={currentPage}
           />
           : null}
       </div>
