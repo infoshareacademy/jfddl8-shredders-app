@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken'
 import { store } from '../store'
 import { addErrorWithSnackActionCreator } from './errors'
 import { fetchWithToken } from './users'
+import { fetchs } from './users'
 
 
 const API_KEY = 'AIzaSyAY8yO-AihhNCdcOpVSDcqNWmXs7U5wdVU'
@@ -172,6 +173,7 @@ export const checkIfUSerIsLoggedInAsyncActionCreator = () => (dispatch, getState
 
   if (idToken && refreshToken) {
     dispatch(loggedInActionCreator(idToken, refreshToken))
+    dispatch(fetchs.getAsyncActionCreator('https://jfddl8-shredders.firebaseio.com/users/' + jwt.decode(idToken).user_id))
   } else {
     dispatch(loggedOutActionCreator())
   }
@@ -216,11 +218,6 @@ export default (state = initialState, action) => {
     case LOGGED_OUT:
       return {
         ...initialState
-      }
-    case 'broke-token':
-      return {
-        ...state,
-        idToken: 'xxx'
       }
     case START_FETCHING:
       return {

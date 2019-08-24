@@ -3,6 +3,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { loggedOutActionCreator } from '../../../state/auth'
 import { withRouter } from 'react-router'
+import { fetchs } from '../../../state/users'
 
 import MuiAppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
@@ -19,7 +20,10 @@ const styles = {
   title: { flexGrow: 1 },
 }
 
+
 const AppBar = (props) => {
+  const photo = props._user && props._user.photo
+
   return (
     <div>
       <MuiAppBar color={'default'} position="static">
@@ -45,8 +49,17 @@ const AppBar = (props) => {
             </Typography>
           }
           <Link to='/account'>
-            <IconButton>
-              <AccountCircle />
+            <IconButton >
+              {
+                photo ?
+                  <img
+                    style={{ width: 24, height: 24, borderRadius: '50%' }}
+                    src={photo}
+                    alt={"user_photo"}
+                  />
+                  :
+                  <AccountCircle />
+              }
             </IconButton>
           </Link>
           <IconButton style={{ width: 48, height: 48 }} >
@@ -68,11 +81,17 @@ const AppBar = (props) => {
   )
 }
 
+const mapStateToProps = state => ({
+  _userId: state.auth.userData.user_id,
+  _user: state.users.data
+})
+
 const mapDispatchToProps = dispatch => ({
-  _logOut: () => dispatch(loggedOutActionCreator())
+  _logOut: () => dispatch(loggedOutActionCreator()),
+  _getUser: (url) => dispatch(fetchs.getAsyncActionCreator(url))
 })
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(withRouter(AppBar))
