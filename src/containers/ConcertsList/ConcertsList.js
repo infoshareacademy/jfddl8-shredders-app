@@ -3,7 +3,7 @@ import React, { Component, Fragment } from 'react'
 import List from '../../components/List'
 import Filters from './Filters';
 
-import Paper from '@material-ui/core/Paper';
+import { Box } from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 import { fetchs } from '../../state/concerts'
@@ -14,7 +14,9 @@ import { mapObjectToArray } from '../../services/mapObjectToArray'
 import { isEqual } from 'lodash'
 
 const styles = {
-  paper: { marginTop: 20, padding: '0px 10px 0 10px' },
+  paper: {
+    marginTop: 5, padding: '0px 10px 0 10px', borderRadius: '4px'
+  },
   progress: {
     position: 'fixed',
     top: 0,
@@ -96,7 +98,7 @@ class ConcertsList extends Component {
       <Fragment>
         {this.props._isFetching ? <div style={styles.progress}><CircularProgress size={80} /></div> : null}
 
-        <Paper style={styles.paper}>
+        <Box style={styles.paper} boxShadow={3}>
           <Filters
             toggleFavorite={this.toggleFavorite}
             onChangeHanler={this.onChangeHanler}
@@ -114,7 +116,7 @@ class ConcertsList extends Component {
               _userId={this.props._userId}
             />
             : null}
-        </Paper>
+        </Box>
       </Fragment>
     )
   }

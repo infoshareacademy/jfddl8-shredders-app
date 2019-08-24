@@ -6,7 +6,7 @@ import { ListItem, ListItemText } from '@material-ui/core'
 const SideBarItem = (props) => {
   return (
     <Link to={props.to} style={{ textDecoration: 'none', color: 'black' }} onClick={props.toggleSideBar}>
-      <ListItem button={true}>
+      <ListItem button={true} style={{ textAlign: 'center' }}>
         <ListItemText primary={props.label} />
       </ListItem>
     </Link>

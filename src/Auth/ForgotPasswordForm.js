@@ -39,7 +39,7 @@ const ForgotPasswordForm = props => {
     <div style={styles.div}>
       <Paper style={styles.paper}>
         <Typography variant={'h4'}>
-          Type your e-mail
+          Wpisz swój e-mail
       </Typography>
         <TextField
           value={props.email}
@@ -48,8 +48,8 @@ const ForgotPasswordForm = props => {
           onBlur={props.onLogIn().emailInputBlur}
           fullWidth
           error={props.errors.wrongEmail}
-          label={"e-mail"}
-          helperText={props.errors.wrongEmail ? "Wrong e-mail" : ''}
+          label={"E-mail"}
+          helperText={props.errors.wrongEmail ? "Niepoprawny e-mail" : ''}
         />
         <Button
           style={styles.button}
@@ -61,7 +61,7 @@ const ForgotPasswordForm = props => {
           }}
           disabled={!(props.email.length > 0 && !props.errors.wrongEmail)}
         >
-          SEND
+          Wyślij
       </Button>
         <Button
           style={styles.button}
@@ -69,7 +69,7 @@ const ForgotPasswordForm = props => {
           color={'secondary'}
           onClick={props.toggleForgotPassword}
         >
-          BACK
+          Powrót
       </Button>
       </Paper>
     </div>

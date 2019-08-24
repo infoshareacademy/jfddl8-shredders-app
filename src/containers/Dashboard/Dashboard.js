@@ -1,6 +1,10 @@
 import React from 'react'
 
-import { Typography } from '@material-ui/core';
+import withFetchService from '../../services/withFetchService'
+import { fetchs } from '../../state/concerts'
+
+import { Typography, Box } from '@material-ui/core'
+import { isEqual, forEach } from 'lodash'
 
 const styles = {
   h2: {
@@ -13,23 +17,81 @@ const styles = {
     margin: '50px',
     display: 'flex',
     justifyContent: 'center'
+  },
+  box: {
+    display: 'flex',
+    flexDirection: 'column',
+    margin: '5px auto',
+    padding: '2%',
+    position: 'relative',
+    borderRadius: '4px',
+  },
+  span: {
+    color: 'red',
+    fontSize: '2rem'
   }
 }
 
-const Dashboard = (props) => (
-  <div style={{ display: 'flex', flexDirection: 'column', margin: 'auto' }}>
-    <div style={styles.h2}>
-      <Typography variant={'h3'} style={styles.h2}>
-        MusicTripper - zaplanuj swoją muzyczną podróż
-      </Typography>
-      <Typography variant={'h6'} style={styles.h2}>
-        MusicTripper jest aplikacją umożliwiającą zaplanowanie twojego koncertowego tripa. Jest to niezawodni towarzysz podróży, dzięki któremu wszystkie najpotrzebniejsze informacje będą w jednym miejscu. Odkrywaj najciekawsze wydażenia muzyczne w Twojej okolicy. Zabierz swoich znajomych w niezapomnianą muzyczną podróż!
-      </Typography>
-    </div>
-    <div style={styles.div}>
+class Dashboard extends React.Component {
+  state = {
+    chartData: []
+  }
 
-    </div>
-  </div >
-)
+  componentDidMount() {
+    this.props._getData()
+  }
 
-export default Dashboard
+  setChartData(concerts) {
+    const countGenres = {}
+    forEach(concerts, (concert) => {
+      const genre = concert.genre.toLowerCase()
+      countGenres[genre] = countGenres[genre] ? countGenres[genre] + 1 : 1
+    })
+    const dataToChart = []
+    forEach(countGenres, (y, name) => {
+      dataToChart.push({ name, y })
+    })
+    this.setState({
+      chartData: dataToChart
+    })
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (!isEqual(nextProps._data, this.props._data)) {
+      this.setChartData(nextProps._data)
+      return true
+    } else {
+      return false
+    }
+  }
+
+  render() {
+    return (
+      <Box style={styles.box} boxShadow={3}>
+        <div>
+          <Typography variant={'h4'} style={styles.h2}>
+            <img style={{ maxHeight: 300, maxWidth: '90vw' }} src='https://i.ibb.co/rmsqMWV/logo-Music-Tripper1.png' alt='Music-Tripper' />
+            <br />
+            <br />
+            Znajdź wymażony koncert !
+        </Typography>
+          <Typography variant={'h6'} style={styles.h2}>
+            Przeglądaj listę wydarzeń muzycznych spośród <span style={styles.span}>
+              {this.props._data.length !== 0 ? this.props._data.length : null}
+            </span> pozycji!
+            <br />
+            Zobacz gdzie i kiedy gra Twój ulubiony zespół, oraz sprawdź cenę biletu.
+        </Typography>
+        </div>
+        <div style={styles.div}>
+
+        </div>
+      </Box >
+    )
+  }
+}
+
+export default withFetchService(
+  'concerts',
+  fetchs
+)(Dashboard)

@@ -47,7 +47,7 @@ const LoginForm = props => {
     <div style={styles.div}>
       <Paper style={styles.paper}>
         <Typography variant={'h4'}>
-          Please log in
+          Zaloguj się
       </Typography>
         <TextField
           value={props.email}
@@ -57,15 +57,15 @@ const LoginForm = props => {
           onKeyPress={evt => { if (evt.key === 'Enter' && enableSubmit) props.onLogIn().click() }}
           error={props.errors.wrongEmail}
           fullWidth
-          label={"e-mail"}
-          helperText={props.errors.wrongEmail ? "Wrong e-mail" : ''}
+          label={"E-mail"}
+          helperText={props.errors.wrongEmail ? "Niepoprawny e-mail" : ''}
         />
         <TextField
           value={props.password}
           onChange={props.onInputChanged('password')}
           onKeyPress={evt => { if (evt.key === 'Enter') props.onLogIn().click() }}
           fullWidth
-          label={'password'}
+          label={'Hasło'}
           type={'password'}
         />
         <div style={styles.buttons}>
@@ -76,7 +76,7 @@ const LoginForm = props => {
             onClick={props.onLogIn().click}
             disabled={!enableSubmit}
           >
-            LOG IN
+            Logowanie
       </Button>
           <div style={styles.progress}>
             {props._isFetching ? <CircularProgress /> : null}
@@ -87,7 +87,7 @@ const LoginForm = props => {
             variant={'contained'}
             color={'secondary'}
           >
-            SIGN UP
+            Rejestracja
       </Button>
         </div>
         <Link
@@ -97,7 +97,7 @@ const LoginForm = props => {
             evt.preventDefault()
           }}
         >
-          forgot password?
+          Zapomniałeś/aś hasła ?
         </Link>
       </Paper>
     </div>

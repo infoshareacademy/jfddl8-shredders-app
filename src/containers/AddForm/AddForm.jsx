@@ -3,12 +3,12 @@ import React from 'react'
 import withFetchService from '../../services/withFetchService'
 import { fetchs } from '../../state/concerts'
 import TextField from '../../components/TextField'
-import Button from '../../components/Button';
+import Button from '../../components/Button'
 
-import CircularProgress from '@material-ui/core/CircularProgress';
-import { Paper } from '@material-ui/core'
-import MenuItem from '@material-ui/core/MenuItem';
-import MuiTextField from '@material-ui/core/TextField';
+import CircularProgress from '@material-ui/core/CircularProgress'
+import { Box } from '@material-ui/core'
+import MenuItem from '@material-ui/core/MenuItem'
+import MuiTextField from '@material-ui/core/TextField'
 
 class AddForm extends React.Component {
   state = {
@@ -104,12 +104,12 @@ class AddForm extends React.Component {
 
   render() {
     const formData = [
-      { label: 'Nazwa zespołu', functionArg: 'band', helperText: 'Please fill in before submitting!' },
-      { label: 'Data: DD/MM/RRRR', functionArg: 'date', helperText: 'Invalid date format!' },
-      { label: 'Opis', functionArg: 'description', helperText: 'Please fill in before submitting!' },
-      { label: 'Lokalizacja', functionArg: 'location', helperText: 'Please fill in before submitting!' },
-      { label: 'URL do zdjęcia', functionArg: 'photo', helperText: 'Please fill in a valid url!' },
-      { label: 'Cena biletu', functionArg: 'ticketPrice', helperText: 'Please fill in a number!' }
+      { label: 'Nazwa zespołu', functionArg: 'band', helperText: 'Wpisz nazwę zespołu!' },
+      { label: 'Data: DD/MM/RRRR', functionArg: 'date', helperText: 'Niepoprawny format!' },
+      { label: 'Opis', functionArg: 'description', helperText: 'Wpisz informacje o wykonawcy!' },
+      { label: 'Lokalizacja', functionArg: 'location', helperText: 'Wpisz lokalizajcę!' },
+      { label: 'URL do zdjęcia', functionArg: 'photo', helperText: 'Wpisz adres URL zdjęcia!' },
+      { label: 'Cena biletu', functionArg: 'ticketPrice', helperText: 'Wpisz cenę biletu!' }
     ]
 
     const arrayOfGenres = ['Pop', 'Rock', 'Jazz', 'Disco-Polo', 'Hip-Hop', 'Metal', 'Classical']
@@ -121,9 +121,9 @@ class AddForm extends React.Component {
       this.state.errors.photo || this.state.errors.ticketPrice
 
     const styles = {
-      paper: { maxWidth: '700px', padding: '30px', margin: '10px auto' },
-      select: { maxWidth: '600px', alignSelf: 'center' },
-      form: { display: 'flex', flexDirection: 'column' },
+      paper: { padding: '30px', margin: '5px auto', borderRadius: '4px' },
+      select: { maxWidth: '600px', alignSelf: 'center', margin: '5px' },
+      form: { display: 'flex', flexDirection: 'column', alignSelf: 'center' },
       progress: {
         position: 'fixed',
         top: 0,
@@ -139,7 +139,7 @@ class AddForm extends React.Component {
       }
     }
     return (
-      <Paper style={styles.paper}>
+      <Box style={styles.paper} boxShadow={3}>
         <form style={styles.form}>
           {this.props._isFetching ? <div style={styles.progress}><CircularProgress size={80} /></div> : null}
           {formData.map(elem => (
@@ -158,6 +158,7 @@ class AddForm extends React.Component {
             style={styles.select}
             fullWidth
             label="Gatunek muzyczny"
+            variant="outlined"
             value={this.state.formData.genre}
             onChange={this.selectChangeHandler('genre')}
             margin={'normal'}
@@ -175,7 +176,7 @@ class AddForm extends React.Component {
             handleOnClick={this.onSendData}
           />
         </form>
-      </Paper>
+      </Box>
     )
   }
 }

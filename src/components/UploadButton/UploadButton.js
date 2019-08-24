@@ -17,6 +17,9 @@ const styles = {
     color: 'white',
     display: 'inline-block',
     cursor: 'pointer'
+  },
+  button: {
+    width: 250
   }
 }
 
@@ -25,9 +28,9 @@ const UploadButton = props => {
     <div>
       <div>
         <label style={styles.label} htmlFor="file">
-          <Button variant={'contained'} color={'primary'}>
+          <Button style={styles.button} variant={'contained'} color={'primary'}>
             <input type="file" name="file" id="file" style={styles.input} onChange={props.onImageChange} />
-            Choose your photo
+            Wybierz zdjęcie profilowe
           </Button>
         </label>
       </div>

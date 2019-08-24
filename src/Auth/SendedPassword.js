@@ -27,7 +27,7 @@ const SendedPassword = props => {
     <div style={styles.div}>
       <Paper style={styles.paper}>
         <Typography variant={'h5'}>
-          We sended new password! Check your e-mail.
+          Nowe hasło zostało wysłane. Sprawdź pocztę!
       </Typography>
         <Button
           style={styles.button}
@@ -38,7 +38,7 @@ const SendedPassword = props => {
             props.toggleSendedPassword()
           }}
         >
-          BACK to LOGIN
+          Do logowania
       </Button>
       </Paper>
     </div>

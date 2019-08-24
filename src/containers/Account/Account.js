@@ -7,7 +7,7 @@ import { fetchs } from '../../state/users'
 
 import UploadButton from '../../components/UploadButton/UploadButton'
 import fetchService from '../../state/fetchServiceDuck'
-import { Paper, Typography, TextField, Button, CircularProgress } from '@material-ui/core'
+import { Box, Typography, TextField, Button, CircularProgress } from '@material-ui/core'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 
 
@@ -26,7 +26,7 @@ const styles = {
   },
   button: {
     margin: 15,
-    width: 160
+    width: 250
   },
   photoContainer: {
     display: 'flex',
@@ -34,7 +34,9 @@ const styles = {
   },
   photo: {
     maxWidth: 300,
-    maxHeight: 300
+    maxHeight: 300,
+    width: '60%',
+    borderRadius: '5px'
   }
 }
 
@@ -85,10 +87,10 @@ class Account extends React.Component {
           })
         }
       } else {
-        this.props._addSnack('Image size too big! Max file size 1MB!', 'red')
+        this.props._addSnack('Maksymalny rozmiar zdjęcia to 1MB!', 'red')
       }
     } else {
-      this.props._addSnack('Wrong image format! Only .jpg and .png allowed!', 'red')
+      this.props._addSnack('Zdjęcie musi być w formacie .jpg lub .png', 'red')
     }
   }
 
@@ -142,10 +144,10 @@ class Account extends React.Component {
           newPassword: '',
           newPassword2: ''
         })
-        this.props._addSnack('Password changed', 'green')
+        this.props._addSnack('Hasło zostało zmienione.', 'green')
       })
       .catch(() => {
-        this.props._addSnack('Please re-log and try again!', 'red')
+        this.props._addSnack('Wystąpił błąd, spróbuj ponownie.', 'red')
       })
   }
 
@@ -157,7 +159,7 @@ class Account extends React.Component {
     )
 
     return (
-      <Paper style={{ padding: '20px' }}>
+      <Box style={{ margin: '5px auto', borderRadius: '4px', padding: '20px' }} boxShadow={3}>
         <div style={styles.photoContainer}>
           {this.props._user && this.props._user.photo ?
             <img style={styles.photo} src={this.props._user.photo} alt='Profile img' />
@@ -166,7 +168,7 @@ class Account extends React.Component {
           }
         </div>
         <Typography style={styles.changePassword} variant={'h6'}>
-          Change password:
+          Zmiana hasła:
         </Typography>
         <div style={styles.inputs}>
           <TextField
@@ -175,12 +177,12 @@ class Account extends React.Component {
             onFocus={this.onPassword().firstInputFocus}
             onBlur={this.onPassword().firstInputBlur}
             style={styles.input}
-            label={'new password'}
+            label={'Nowe hasło'}
             fullWidth
             variant="outlined"
             type={'password'}
             error={this.state.newPasswordError}
-            helperText={this.state.newPasswordError ? "Password must have 8 characters!" : ''}
+            helperText={this.state.newPasswordError ? "Hasło musi zawierać przynajmniej 8 znaków!" : ''}
             disabled={this.state.disabledInputs}
           />
           <TextField
@@ -189,12 +191,12 @@ class Account extends React.Component {
             onFocus={this.onPassword().secondInputFocus}
             onBlur={this.onPassword().secondInputBlur}
             style={styles.input}
-            label={'repeat new password'}
+            label={'Powtórz nowe hasło'}
             fullWidth
             variant="outlined"
             type={'password'}
             error={this.state.newPassword2Error}
-            helperText={this.state.newPassword2Error ? "Passwords must be the same!!" : ''}
+            helperText={this.state.newPassword2Error ? "Hasła muszą być takie same!" : ''}
             disabled={this.state.disabledInputs}
           />
           <Button
@@ -204,13 +206,13 @@ class Account extends React.Component {
             disabled={isDisabledButton}
             onClick={this.onClick}
           >
-            Submit
+            Zmień hasło
           </Button>
           <UploadButton onImageChange={this.onImageChange} />
           <br />
           {this.props._isFetching ? <CircularProgress /> : null}
         </div>
-      </Paper>
+      </Box>
     )
   }
 }

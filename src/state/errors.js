@@ -6,10 +6,10 @@ export const addErrorWithSnackActionCreator = data => dispatch => {
   const message = data && data.error && data.error.message
 
   if (message === 'EMAIL_NOT_FOUND' || message === "INVALID_PASSWORD" || message === "INVALID_EMAIL")
-    dispatch(addSnackbarActionCreator('Invalid email or password.', 'red'))
+    dispatch(addSnackbarActionCreator('Niepoprawny e-mail lub hasło.', 'red'))
 
   if (message === 'EMAIL_EXISTS')
-    dispatch(addSnackbarActionCreator('User with that email arleady exists.', 'red'))
+    dispatch(addSnackbarActionCreator('Podany adres e-mail jest już zarejestrowany.', 'red'))
 
 
   dispatch(addActionCreator(data))

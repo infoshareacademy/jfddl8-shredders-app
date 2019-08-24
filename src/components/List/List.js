@@ -55,7 +55,7 @@ class List extends React.Component {
           concertsToShow.length === 0 &&
           <div style={styles.noResult}>
             <Typography>
-              No results, try with another filters!
+              Nie znaleziono żadnych wyników, spróbuj ponownie.
               </Typography>
           </div>
         }
