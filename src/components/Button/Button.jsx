@@ -23,7 +23,7 @@ const Button = (props) => {
       size={size}
       onClick={handleOnClick}
     >
-      SUBMIT
+      Dodaj koncert
     </MuiButton>
   )
 }

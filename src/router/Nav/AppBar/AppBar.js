@@ -60,7 +60,7 @@ const AppBar = (props) => {
               props.history.push('/')
             }}
           >
-            LOG OUT
+            Wyloguj
           </Button>
         </Toolbar>
       </MuiAppBar>

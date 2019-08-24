@@ -104,12 +104,12 @@ class AddForm extends React.Component {
 
   render() {
     const formData = [
-      { label: 'Band', functionArg: 'band', helperText: 'Please fill in before submitting!' },
-      { label: 'Date: DD/MM/YYYY', functionArg: 'date', helperText: 'Invalid date format!' },
-      { label: 'Description', functionArg: 'description', helperText: 'Please fill in before submitting!' },
-      { label: 'Location', functionArg: 'location', helperText: 'Please fill in before submitting!' },
-      { label: 'Photo URL', functionArg: 'photo', helperText: 'Please fill in a valid url!' },
-      { label: 'Ticket price', functionArg: 'ticketPrice', helperText: 'Please fill in a number!' }
+      { label: 'Nazwa zespołu', functionArg: 'band', helperText: 'Please fill in before submitting!' },
+      { label: 'Data: DD/MM/RRRR', functionArg: 'date', helperText: 'Invalid date format!' },
+      { label: 'Opis', functionArg: 'description', helperText: 'Please fill in before submitting!' },
+      { label: 'Lokalizacja', functionArg: 'location', helperText: 'Please fill in before submitting!' },
+      { label: 'URL do zdjęcia', functionArg: 'photo', helperText: 'Please fill in a valid url!' },
+      { label: 'Cena biletu', functionArg: 'ticketPrice', helperText: 'Please fill in a number!' }
     ]
 
     const arrayOfGenres = ['Pop', 'Rock', 'Jazz', 'Disco-Polo', 'Hip-Hop', 'Metal', 'Classical']
@@ -157,7 +157,7 @@ class AddForm extends React.Component {
             select
             style={styles.select}
             fullWidth
-            label="Music genre"
+            label="Gatunek muzyczny"
             value={this.state.formData.genre}
             onChange={this.selectChangeHandler('genre')}
             margin={'normal'}
