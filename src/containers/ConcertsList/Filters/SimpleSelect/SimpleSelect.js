@@ -16,7 +16,7 @@ const SimpleSelect = props => {
       margin={window.innerWidth < 781 ? 'none' : "normal"}
       style={style}
     >
-      {['All', 'Pop', 'Rock', 'Jazz', 'Disco-Polo', 'Hip-Hop', 'Metal', 'Classical'].map(genre => (
+      {['Wszystkie', 'Pop', 'Rock', 'Jazz', 'Disco-Polo', 'Hip-Hop', 'Metal', 'Classical'].map(genre => (
         <MenuItem key={genre} value={genre.toLowerCase()}>{genre}</MenuItem>
       ))}
     </TextField>

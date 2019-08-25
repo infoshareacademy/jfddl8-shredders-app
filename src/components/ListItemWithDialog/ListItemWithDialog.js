@@ -112,7 +112,7 @@ const ListItemWithDialog = (props) => {
                   .then(() => props.history.push('/concerts-list'))
               }}
             >
-              Remove
+              USUŃ
             </Button>
           </div>
         </Paper>

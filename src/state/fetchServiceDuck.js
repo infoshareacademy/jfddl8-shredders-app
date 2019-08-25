@@ -73,7 +73,7 @@ export default (url, name, mapData, withSnackbars) => {
         return r
       })
       .then((data) => {
-        if (withSnackbars) dispatch(addSnackbarActionCreator('Removed', 'green'))
+        if (withSnackbars) dispatch(addSnackbarActionCreator('Usunięto', 'green'))
         return data
       })
   }
@@ -88,7 +88,7 @@ export default (url, name, mapData, withSnackbars) => {
         body: JSON.stringify(item)
       })
       .then((data) => {
-        if (withSnackbars) dispatch(addSnackbarActionCreator('Added', 'green'))
+        if (withSnackbars) dispatch(addSnackbarActionCreator('Dodano', 'green'))
         return data
       })
   }

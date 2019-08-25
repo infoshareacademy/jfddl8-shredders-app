@@ -41,7 +41,7 @@ class ConcertsList extends Component {
       band: '',
       location: '',
       date: '',
-      genre: 'all',
+      genre: 'wszystkie',
     }
   }
 
@@ -88,7 +88,7 @@ class ConcertsList extends Component {
       const isBandMatch = el.band ? el.band.toLowerCase().includes(this.state.filters.band.toLowerCase()) : true
       const isDateMatch = el.date ? el.date.includes(this.state.filters.date) : true
       const isPlaceMatch = el.location ? el.location.toLowerCase().includes(this.state.filters.location.toLowerCase()) : true
-      const isGenreMatch = this.state.filters.genre === 'all' || (el.genre ? el.genre.toLowerCase().includes(this.state.filters.genre.toLowerCase()) : true)
+      const isGenreMatch = this.state.filters.genre === 'wszystkie' || (el.genre ? el.genre.toLowerCase().includes(this.state.filters.genre.toLowerCase()) : true)
 
       return isFavorite && isBandMatch && isDateMatch && isGenreMatch && isPlaceMatch
     })
