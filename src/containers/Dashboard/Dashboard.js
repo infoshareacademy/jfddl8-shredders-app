@@ -59,7 +59,7 @@ class Dashboard extends React.Component {
       <Box style={styles.h2} boxShadow={3}>
         <img style={{ maxHeight: 300, maxWidth: '90vw', margin: '20px auto' }} src='https://i.ibb.co/rmsqMWV/logo-Music-Tripper1.png' alt='Music-Tripper' />
         <Typography variant={'h4'}>
-          Znajdź wymażony koncert !
+          Znajdź wymarzony koncert !
           </Typography>
         <Typography variant={'h6'}>
           Przeglądaj listę wydarzeń muzycznych spośród <span style={styles.span}>
