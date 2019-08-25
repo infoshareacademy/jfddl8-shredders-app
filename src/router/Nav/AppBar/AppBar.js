@@ -18,6 +18,14 @@ import ShareIcon from '@material-ui/icons/Share'
 
 const styles = {
   title: { flexGrow: 1 },
+  appBar: {
+    display: 'flex',
+    justifyContent: 'center',
+    background: 'radial-gradient(circle, rgba(81,67,110,1) 10%, rgba(102,104,148,1) 72%, rgba(120,137,182,1) 88%, rgba(120,137,182,1) 89%, rgba(137,167,212,1) 98%, rgba(148,187,233,1) 100%)',
+    height: 80,
+    borderRadius: '4px'
+  },
+  img: { maxWidth: 30, maxHeight: 30, height: '100%', width: '100%', borderRadius: '50%', objectFit: 'cover', overflow: 'hidden' }
 }
 
 
@@ -26,20 +34,20 @@ const AppBar = (props) => {
 
   return (
     <div>
-      <MuiAppBar color={'default'} position="static">
+      <MuiAppBar style={styles.appBar} position="static">
         <Toolbar>
-          <IconButton edge="start" color="inherit" aria-label="menu" onClick={props.toggleSideBar}>
+          <IconButton edge="start" style={{ color: 'black' }} aria-label="menu" onClick={props.toggleSideBar}>
             <MenuIcon />
           </IconButton>
 
-          {document.body.clientWidth > 400 ?
+          {document.body.clientWidth > 570 ?
             <Typography
               style={styles.title}
-              variant="h6"
+              variant="h5"
             >
               <Link to='/' style={{ textDecoration: 'none', color: 'black', lineHeight: 1 }}>
-                Music Tripper
-            </Link>
+                <img style={{ height: 40, width: 300 }} src="https://i.ibb.co/rZWyVsC/Music-Tripper.png" alt="Music-Tripper" border="0" />
+              </Link>
             </Typography>
             :
             <Typography
@@ -53,7 +61,7 @@ const AppBar = (props) => {
               {
                 photo ?
                   <img
-                    style={{ width: 24, height: 24, borderRadius: '50%' }}
+                    style={styles.img}
                     src={photo}
                     alt={"user_photo"}
                   />
@@ -73,7 +81,7 @@ const AppBar = (props) => {
               props.history.push('/')
             }}
           >
-            LOG OUT
+            Wyloguj
           </Button>
         </Toolbar>
       </MuiAppBar>

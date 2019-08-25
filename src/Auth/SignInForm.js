@@ -46,7 +46,7 @@ const SignInForm = props => {
     <div style={styles.div}>
       <Paper style={styles.paper}>
         <Typography variant={'h4'}>
-          Sign up
+          Rejestracja
       </Typography>
         <TextField
           value={props.email}
@@ -55,8 +55,8 @@ const SignInForm = props => {
           onBlur={props.onSign().emailInputBlur}
           error={props.errors.wrongEmail}
           fullWidth
-          label={"e-mail"}
-          helperText={props.errors.wrongEmail ? "Wrong e-mail" : ''}
+          label={"E-mail"}
+          helperText={props.errors.wrongEmail ? "Niepoprawny e-mail!" : ''}
         />
         <TextField
           value={props.password}
@@ -65,9 +65,9 @@ const SignInForm = props => {
           onBlur={props.onSign().firstInputBlur}
           error={props.errors.shortPassword}
           fullWidth
-          label={'password'}
+          label={'Hasło'}
           type={'password'}
-          helperText={props.errors.shortPassword ? "Password must have 8 characters!" : ''}
+          helperText={props.errors.shortPassword ? "Hasło musi zawierać przynajmniej 8 znaków!" : ''}
         />
         <TextField
           value={props.password2}
@@ -76,9 +76,9 @@ const SignInForm = props => {
           onBlur={props.onSign().secondInputBlur}
           error={props.errors.notSamePassword}
           fullWidth
-          label={'repeat-password'}
+          label={'Powtórz hasło'}
           type={'password'}
-          helperText={props.errors.notSamePassword ? "Passwords must be the same!" : ''}
+          helperText={props.errors.notSamePassword ? "Hasła muszą być takie same!" : ''}
         />
         <div style={styles.buttons}>
           <Button
@@ -88,7 +88,7 @@ const SignInForm = props => {
             color={'primary'}
             disabled={!(enableSubmit)}
           >
-            SIGN UP
+            Rejestracja
       </Button>
           <div style={styles.progress}>
             {props._isFetching ? <CircularProgress /> : null}
@@ -99,7 +99,7 @@ const SignInForm = props => {
             variant={'contained'}
             color={'secondary'}
           >
-            LOG IN
+            Logowanie
       </Button>
         </div>
       </Paper>

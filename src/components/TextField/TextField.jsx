@@ -7,7 +7,7 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     padding: '30',
-    margin: '0 auto',
+    margin: '5px auto',
     maxWidth: '600px'
   }
 }
@@ -26,6 +26,7 @@ const TextField = (props) => {
       helperText={helperText}
       label={label}
       margin={'normal'}
+      variant="outlined"
       onChange={changeHandler}
       onBlur={onBlur}
       value={value}

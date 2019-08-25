@@ -7,7 +7,7 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     margin: '20px auto',
-    maxWidth: '600px',
+    width: 250
   }
 }
 
@@ -19,11 +19,10 @@ const Button = (props) => {
       variant={'contained'}
       color={color}
       disabled={disabled}
-      fullWidth
       size={size}
       onClick={handleOnClick}
     >
-      SUBMIT
+      Dodaj koncert
     </MuiButton>
   )
 }

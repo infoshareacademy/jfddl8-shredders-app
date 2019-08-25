@@ -30,20 +30,20 @@ const Filters = props => {
       />
 
       <TextField
-        label="Find Band"
+        label="Zespół"
         value={props.filters.band}
         onChange={props.onChangeHanler('band')}
         style={{ margin: '0 20px' }}
       />
       <TextField
-        label="Find Location"
+        label="Lokalizacja"
         value={props.filters.location}
         onChange={props.onChangeHanler('location')}
         style={{ margin: '0 20px' }}
       />
 
       <TextField
-        label="Date"
+        label="Data"
         value={props.filters.date}
         onChange={props.onChangeHanler('date')}
         style={{ margin: '0 20px' }}
