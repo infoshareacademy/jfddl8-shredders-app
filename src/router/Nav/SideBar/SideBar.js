@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Drawer, Typography } from '@material-ui/core'
+import { Drawer } from '@material-ui/core'
 import SideBarItem from './SideBarItem'
 
 const styles = {
@@ -24,9 +24,9 @@ const SideBar = props => (
     onClose={props.toggleSideBar}
   >
     <div style={styles.innerDrawer}>
-      <Typography variant={'h4'} style={styles.menu}>
-        Menu
-      </Typography>
+      <div style={styles.menu}>
+        <img style={{ maxHeight: 75 }} src="https://i.ibb.co/rmsqMWV/logo-Music-Tripper1.png" alt="Music-Tripper" border="0" />
+      </div>
       <SideBarItem
         to={'/Dashboard'}
         label={'Strona główna'}

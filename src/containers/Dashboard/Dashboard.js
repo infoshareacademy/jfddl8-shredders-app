@@ -78,7 +78,6 @@ class Dashboard extends React.Component {
   }
 }
 
-
 export default withFetchService(
   'concerts',
   fetchs
