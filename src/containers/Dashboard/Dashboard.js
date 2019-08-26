@@ -3,8 +3,9 @@ import React from 'react'
 import withFetchService from '../../services/withFetchService'
 import { fetchs } from '../../state/concerts'
 import ChartOfGenres from './components/ChartOfGenres'
+import { fetchWithToken } from './../../state/users'
 
-import { Typography, Box } from '@material-ui/core'
+import { Typography, Box, CircularProgress } from '@material-ui/core'
 import { forEach } from 'lodash'
 
 const styles = {
@@ -31,12 +32,19 @@ const styles = {
 
 class Dashboard extends React.Component {
   state = {
-    chartData: []
+    chartData: [],
+    usersAmount: null
   }
 
   componentDidMount() {
     this.props._getData()
       .then(() => this.setChartData(this.props._data))
+
+    fetchWithToken('https://jfddl8-shredders.firebaseio.com/users.json?')
+      .then((data) => {
+        const usersAmount = Object.keys(data).length
+        this.setState({ usersAmount })
+      })
   }
 
   setChartData(concerts) {
@@ -73,6 +81,11 @@ class Dashboard extends React.Component {
           <Typography variant='h6'>Gatunki muzyczne koncertów:</Typography>
           <ChartOfGenres chartData={this.state.chartData} />
         </div>
+        <Typography variant={'h5'}>
+          Zarejestrowanych użytkowników:  <span style={styles.span}>
+            {this.state.usersAmount ? this.state.usersAmount : <CircularProgress size={30} />}
+          </span>
+        </Typography>
       </Box >
     )
   }
